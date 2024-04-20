@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".ui.fragments.HomeFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Salom , Abdulazizbekjon"
+            android:textColor="@color/white"
+            android:textSize="21sp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            app:cardCornerRadius="40dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/image_search"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_img" />
+
+            <EditText
+                android:id="@+id/edit_text_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@id/image_search"
+                android:background="@null"
+                android:hint="Kurs qidirish"
+                android:maxLines="1"
+                android:paddingStart="15dp"
+                android:paddingEnd="5dp"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/black"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_cat_home_layout"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/text_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/home_item_layout"
+        />
+</LinearLayout>
