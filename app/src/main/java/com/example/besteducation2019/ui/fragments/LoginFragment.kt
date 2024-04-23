@@ -1,5 +1,7 @@
 package com.example.besteducation2019.ui.fragments
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +16,7 @@ import com.example.besteducation2019.model.login_respons
 import com.example.besteducation2019.model.register_model
 import com.example.besteducation2019.model.register_respons
 import com.example.besteducation2019.network.ApiClient
+import com.example.besteducation2019.ui.activitys.HomeActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,6 +43,14 @@ class LoginFragment : Fragment() {
             findNavController().navigateUp()
 
         }
+
+        val token = readFromSharedPreferences(requireActivity(), "TOKEN", "")
+
+        if (!token.isEmpty()){
+            startActivity(Intent(requireActivity(),HomeActivity::class.java))
+            requireActivity().finish()
+        }
+
         request = ApiClient
 
         // Inflate the layout for this fragment
@@ -88,14 +99,10 @@ class LoginFragment : Fragment() {
                 val respons_model = respons.body() as login_respons
                 if(respons_model.status.isNullOrEmpty()){
 
-                    Toast.makeText(
-                        requireActivity(),
-                        respons_model.token,
-                        Toast.LENGTH_LONG
-                    ).show()
+                    saveToSharedPreferences(requireActivity(),"TOKEN",respons_model.token)
 
-
-                }
+                    startActivity(Intent(requireActivity(),HomeActivity::class.java))
+                    requireActivity().finish()                }
                 else{
 
 
@@ -115,6 +122,19 @@ class LoginFragment : Fragment() {
         })
 
 
+    }
+    // Save data to Shared Preferences
+    fun saveToSharedPreferences(context: Context, key: String, value: String) {
+        val sharedPref = context.getSharedPreferences("token", Context.MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            putString(key, value)
+            apply()
+        }
+    }
+    // Read data from Shared Preferences
+    fun readFromSharedPreferences(context: Context, key: String, defaultValue: String): String {
+        val sharedPref = context.getSharedPreferences("token", Context.MODE_PRIVATE)
+        return sharedPref.getString(key, defaultValue) ?: defaultValue
     }
 
     companion object {
