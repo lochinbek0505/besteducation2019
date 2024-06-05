@@ -1,14 +1,17 @@
 package com.example.besteducation2019.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.besteducation2019.databinding.HomeItemLayoutBinding
-import com.example.besteducation2019.model.courses_modelItem
+import com.example.besteducation2019.model.Course
 
 
 class HomeCoursesAdapter(
-    var items: MutableList<courses_modelItem>,
+    val context: Context,
+    var items: MutableList<Course>,
     var listener: ItemSetOnClickListener,
 ) :
     RecyclerView.Adapter<HomeCoursesAdapter.Holder>() {
@@ -16,22 +19,24 @@ class HomeCoursesAdapter(
     var nom = 0
 
     interface ItemSetOnClickListener {
-        fun onClick(data: courses_modelItem)
+        fun onClick(data: Course)
     }
 
     inner class Holder(var view:HomeItemLayoutBinding ) : RecyclerView.ViewHolder(view.root) {
 
-        fun bind(data: courses_modelItem) {
+        fun bind(data: Course) {
 
             view.apply {
 
 
                 this.tvCoursesName.text=data.name
                 this.tvDescription.text=data.description
-                this.tvTeacher.text= "${ data.author.first_name } ${data.author.last_name}"
-                this.tvFeedback.text=data.feedback.toString()
+                this.tvTeacher.text = "${data.author_.firstName} ${data.author_.lastName}"
+                this.tvFeedback.text = data.feedback.toDouble().toString()
                 this.tvPrice.text="${data.price} so'm"
-//                this.tvRegion.text = data
+                this.tvParticantCount.text = "${ data.count_students.toString() } ta o'quvchi"
+                Glide.with(context).load(data.image).into(this.ivImage)
+
             }
 
 

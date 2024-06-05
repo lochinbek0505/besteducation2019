@@ -3,7 +3,7 @@ package com.example.besteducation2019.network
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient {
-    private val BASE_URL="https://besteducation.pythonanywhere.com/api/"
+    private val BASE_URL="https://bestedu.uz/"
 
         val retrofit: Retrofit by lazy {
             Retrofit.Builder()

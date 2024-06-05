@@ -43,49 +43,30 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/iv_asc_banner"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_testssss" />
+                    />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/baseline_person_24" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="25 ta o'quvchi"
-                        android:textSize="18sp" />
-                </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_course_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="10dp"
                     android:ellipsize="end"
                     android:fontFamily="sans-serif-medium"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:text="Milliy sertifikat uchun IELTS testi"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/tv_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -123,25 +104,29 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="15dp"
                         app:cardCornerRadius="40dp">
 
                         <ImageView
+                            android:id="@+id/iv_teacher"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
 
                     </androidx.cardview.widget.CardView>
 
                     <TextView
+                        android:id="@+id/tv_teacher_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
                         android:ellipsize="end"
                         android:fontFamily="sans-serif-medium"
                         android:maxLines="1"
-                        android:text="Otamurodov Jamshid Abdulazizich"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -169,6 +154,7 @@
                             android:src="@drawable/baseline_star_24" />
 
                         <TextView
+                            android:id="@+id/tv_feedback"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
@@ -181,7 +167,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="100dp"
+                        android:layout_marginStart="90dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -191,11 +177,11 @@
                             android:src="@drawable/baseline_person_24" />
 
                         <TextView
+                            android:id="@+id/tv_particant_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:fontFamily="sans-serif-medium"
-                            android:text="70 ta"
                             android:textSize="17sp" />
                     </LinearLayout>
 
@@ -214,6 +200,7 @@
                             android:src="@drawable/dollar" />
 
                         <TextView
+                            android:id="@+id/tv_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -242,14 +229,15 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp"
                         android:src="@drawable/lesson" />
 
                     <TextView
+                        android:id="@+id/tv_lessons_len"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -276,14 +264,15 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp"
                         android:src="@drawable/video_lesson" />
 
                     <TextView
+                        android:id="@+id/tv_video_len"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -310,14 +299,15 @@
                     android:layout_height="match_parent">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp"
                         android:src="@drawable/test" />
 
                     <TextView
+                        android:id="@+id/tv_tests_len"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -353,136 +343,30 @@
                 android:background="@drawable/baground"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="22dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="1. Kirish (Bepul)"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
 
-
-                <LinearLayout
+                <!-- Activity layout file -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/outerRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/play_button" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="25dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="Kurs haqida"
-                        android:textColor="@color/black"
-                        android:textSize="19sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/play_button" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="25dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="Boshlang'ich qism"
-                        android:textColor="@color/black"
-                        android:textSize="19sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/play_button" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="25dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="Fizikaga kirish"
-                        android:textColor="@color/black"
-                        android:textSize="19sp" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/gray2" />
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal">
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="2. Kinematikaga kirish"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_plus" />
-                </RelativeLayout>
+                    android:layout_height="match_parent"
+                    tools:listitem="@layout/outer_item_layout"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    />
 
             </LinearLayout>
-
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:textSize="20sp"
+                android:padding="10dp"
+                android:id="@+id/btn_buy"
+                android:layout_margin="15dp"
+                android:text="Kursni olish"
+                app:cornerRadius="10dp" />
         </LinearLayout>
+
 
 
     </ScrollView>

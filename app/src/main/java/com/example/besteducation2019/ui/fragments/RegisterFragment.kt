@@ -1,6 +1,7 @@
 package com.example.besteducation2019.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,7 +52,12 @@ class RegisterFragment : Fragment() {
         binding.btnRegister.setOnClickListener {
 
 
-            if (binding.etName.text.toString().isEmpty() && binding.etSurname.text.toString().isEmpty() && binding.etSurname.text.toString().isEmpty() && binding.etSurname.text.toString().isEmpty() && binding.etPas2.text.toString().isEmpty()) {
+            if (binding.etName.text.toString().isEmpty() && binding.etSurname.text.toString()
+                    .isEmpty() && binding.etSurname.text.toString()
+                    .isEmpty() && binding.etSurname.text.toString()
+                    .isEmpty() && binding.etPas2.text.toString()
+                    .isEmpty() && binding.etMiddleName.text.toString().isEmpty()
+            ) {
 
                 Toast.makeText(
                     requireActivity(),
@@ -69,7 +75,8 @@ class RegisterFragment : Fragment() {
                             binding.etNumber.text.toString(),
                             binding.etName.text.toString(),
                             binding.etSurname.text.toString(),
-                            binding.etPas.text.toString()
+                            binding.etMiddleName.text.toString(),
+                            binding.etPas.text.toString(),
                         )
                     )
 
@@ -99,14 +106,15 @@ class RegisterFragment : Fragment() {
                 respons: Response<register_respons>
             ) {
                 val respons_model = respons.body() as register_respons
-                if(respons_model.status=="ok"){
+                if (respons_model.status == "success") {
 
                     findNavController().navigate(R.id.action_registerFragment_to_loginFragment2)
                     Toast.makeText(
                         requireActivity(),
-                        respons_model.message,
+                        respons_model.errors.toString(),
                         Toast.LENGTH_LONG
                     ).show()
+                    Log.e("RESPONSSSSS", "  ${respons_model.errors} $p0")
 
 
                 }
@@ -115,9 +123,10 @@ class RegisterFragment : Fragment() {
 
                     Toast.makeText(
                         requireActivity(),
-                        respons_model.message,
+                        respons_model.errors.toString(),
                         Toast.LENGTH_LONG
                     ).show()
+                    Log.e("RESPONSSSSS", "  ${respons_model.errors} $p0")
 
                 }
 

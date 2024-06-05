@@ -1,8 +1,12 @@
 package com.example.besteducation2019.model
 
-import java.io.Serializable
+import com.google.gson.annotations.SerializedName
 
 data class Author(
-    val first_name: String="",
-    val last_name: String=""
-):Serializable
+    @SerializedName("id") var id : Int,
+    @SerializedName("phone") var phone : String,
+    @SerializedName("first_name") var firstName : String,
+    @SerializedName("last_name") var lastName : String,
+    @SerializedName("middle_name") var middleName : String,
+    @SerializedName("image") var image : String
+)

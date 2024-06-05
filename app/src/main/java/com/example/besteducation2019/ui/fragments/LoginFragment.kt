@@ -3,20 +3,20 @@ package com.example.besteducation2019.ui.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.besteducation2019.R
 import com.example.besteducation2019.databinding.FragmentLoginBinding
+import com.example.besteducation2019.model.Author
 import com.example.besteducation2019.model.login_model
-import com.example.besteducation2019.model.login_respons
-import com.example.besteducation2019.model.register_model
-import com.example.besteducation2019.model.register_respons
+import com.example.besteducation2019.model.login_response
 import com.example.besteducation2019.network.ApiClient
 import com.example.besteducation2019.ui.activitys.HomeActivity
+import com.example.besteducation2019.utilits.DatabaseHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,6 +24,7 @@ import retrofit2.Response
 
 class LoginFragment : Fragment() {
     private lateinit var request: ApiClient
+    private lateinit var dbHelper: DatabaseHelper
 
     private lateinit var binding: FragmentLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,25 +63,27 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
 
 
-            if (binding.etNumber.text.toString().isEmpty()  && binding.etPas.text.toString().isEmpty()) {
+            val check = binding.etNumber.text!!.length > 6 && binding.etPas.text!!.length > 1
+            if (check) {
+//                Toast.makeText(
+//                    requireActivity(),
+//                    "ISHLADI",
+//                    Toast.LENGTH_LONG
+//                ).show()
+                getRegister(
+                    login_model(
+                        binding.etNumber.text.toString(),
+                        binding.etPas.text.toString()
+                    )
+                )
+            } else {
 
                 Toast.makeText(
                     requireActivity(),
-                    "Iltimos hamma maydonlarni to'ldiring",
+                    "Iltimos hamma maydonlarni tog'ri to'ldiring",
                     Toast.LENGTH_LONG
                 ).show()
 
-
-            } else {
-
-
-
-                    getRegister(
-                        login_model(
-                            binding.etNumber.text.toString(),
-                            binding.etPas.text.toString()
-                        )
-                    )
 
             }
 
@@ -90,34 +93,67 @@ class LoginFragment : Fragment() {
     }
 
     fun getRegister(model: login_model) {
+        dbHelper = DatabaseHelper(requireActivity())
 
-        request.apiService.login(model).enqueue(object : Callback<login_respons> {
+        // Example of adding a user
+
+        request.apiService.login(model).enqueue(object : Callback<login_response> {
             override fun onResponse(
-                p0: Call<login_respons>,
-                respons: Response<login_respons>
+                p0: Call<login_response>,
+                respons: Response<login_response>
             ) {
-                val respons_model = respons.body() as login_respons
-                if(respons_model.status.isNullOrEmpty()){
+                val respons_model = respons.body() as login_response
+                Toast.makeText(
+                    requireActivity(),
+                    "$respons_model",
+                    Toast.LENGTH_LONG
+                ).show()
 
-                    saveToSharedPreferences(requireActivity(),"TOKEN",respons_model.token)
+                if (respons_model.status == "success") {
 
+                    saveToSharedPreferences(requireActivity(),"TOKEN",respons_model.data.token)
+                    if (respons_model.data.image.isNullOrEmpty()){
+                        val newUser = Author(respons_model.data.id, "", respons_model.data.firstName, respons_model.data.lastName, "", "")
+                        dbHelper.addUser(newUser)
+
+                    }else{
+                        val newUser = Author(respons_model.data.id, "", respons_model.data.firstName, respons_model.data.lastName, "", respons_model.data.image)
+                        dbHelper.addUser(newUser)
+
+                    }
                     startActivity(Intent(requireActivity(),HomeActivity::class.java))
-                    requireActivity().finish()                }
+                    requireActivity().finish()
+                    Toast.makeText(
+                        requireActivity(),
+                        respons_model.data.token,
+                        Toast.LENGTH_LONG
+                    ).show()
+                    Log.e("RESPONSSSSS","  ${respons_model.errors} $p0")
+
+                }
                 else{
 
 
                     Toast.makeText(
                         requireActivity(),
-                        respons_model.message,
+                        respons_model.errors.toString(),
                         Toast.LENGTH_LONG
                     ).show()
+                    Log.e("RESPONSSSSS","  ${respons_model.errors} $p0")
 
                 }
 
             }
 
-            override fun onFailure(p0: Call<login_respons>, respons: Throwable) {
+            override fun onFailure(p0: Call<login_response>, respons: Throwable) {
                 println("RESPONSSSSS  ${respons.message} $p0")
+                Toast.makeText(
+                    requireActivity(),
+                    respons.message,
+                    Toast.LENGTH_LONG
+                ).show()
+                Log.e("RESPONSSSSS","  ${respons.message} $p0")
+
             }
         })
 

@@ -4,7 +4,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitBuilder {
 
-    private val BASE_URL="https://besteducation.pythonanywhere.com/api/"
+    private val BASE_URL="https://bestedu.uz/"
 
     fun create(token:String): ApiService {
         val retrofit = Retrofit.Builder()
