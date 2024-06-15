@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
@@ -21,6 +22,9 @@ import com.example.besteducation2019.network.ApiService
 import com.example.besteducation2019.network.RetrofitBuilder
 import com.example.besteducation2019.ui.activitys.ShowCourseActivity
 import com.example.besteducation2019.utilits.DatabaseHelper
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -47,7 +51,15 @@ class HomeFragment : Fragment() {
         }
         val token = readFromSharedPreferences(requireActivity(), "TOKEN", "")
         Log.e("RESPONSSSSS", "  $token ")
-
+        binding.ssPullRefresh.setOnRefreshListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                delay(2000)
+                binding.ssPullRefresh.setRefreshing(false) // This stops refreshing
+//                mAdapter.randomizeData()
+                getDataFromNetwork(token.toString())
+                getDataFromNetwork2(token)
+            }
+        }
         getDataFromNetwork(token.toString())
         getDataFromNetwork2(token)
         return root

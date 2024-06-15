@@ -47,7 +47,7 @@ interface ApiService {
     //    https://besteducation.pythonanywhere.com/api/courses/course/[id]/
 //    http://147.45.158.162:9060/courses/course/1/
     @GET("courses/course/{id}/")
-    fun courDetailes(@Path("id") id: String): Call<course_detailes_full>
+    suspend fun courDetailes(@Path("id") id: String): Response<course_detailes_full>
 
     //    /courses/course/1/modules/module/1/lessons/lesson/1/
     @GET("courses/course/{id1}/modules/module/{id2}/lessons/lesson/{id3}/")

@@ -64,5 +64,6 @@ dependencies {
     implementation("io.github.afreakyelf:Pdf-Viewer:2.1.1")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation ("com.squareup.okhttp3:okhttp:4.9.2")
+    implementation ("com.github.SimformSolutionsPvtLtd:SSPullToRefresh:1.5.2")
 
 }

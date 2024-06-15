@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.besteducation2019.adapters.OuterAdapter
 import com.example.besteducation2019.databinding.ActivityShowCourseBinding
@@ -12,9 +13,11 @@ import com.example.besteducation2019.model.Course2
 import com.example.besteducation2019.model.Lesson
 import com.example.besteducation2019.model.Module
 import com.example.besteducation2019.model.course_detailes_full
+import com.example.besteducation2019.model.course_model
 import com.example.besteducation2019.model.lesson_id_model
 import com.example.besteducation2019.network.ApiService
 import com.example.besteducation2019.network.RetrofitBuilder
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,28 +41,27 @@ class ShowCourseActivity : AppCompatActivity() {
 
     fun getDataFromNetwork(id: String) {
 
+
         apiService =
             RetrofitBuilder.create(readFromSharedPreferences(this@ShowCourseActivity, "TOKEN", ""))
+        lifecycleScope.launch {
 
-        apiService.courDetailes(id).enqueue(object : Callback<course_detailes_full> {
-            override fun onResponse(
-                p0: Call<course_detailes_full>,
-                respons: Response<course_detailes_full>
-            ) {
-                val data = respons.body() as course_detailes_full
+            try {
+                if (apiService.courDetailes(id).isSuccessful) {
 
-                setDisplay(data.data.course, id)
-                Log.e("ANLYZE2", respons.body().toString())
+                    val data = apiService.courDetailes(id).body() as course_detailes_full
+                    setDisplay(data.data.course, id)
+                    Log.e("ANLYZE2", data.toString())
 
-            }
 
-            override fun onFailure(p0: Call<course_detailes_full>, p1: Throwable) {
+                }
+            } catch (p1: Exception) {
                 println("Responssssssssssssssss ${p1.message}")
                 Log.e("ANLYZE2", p1.message.toString())
 
             }
 
-        })
+        }
 
 
     }
@@ -86,6 +88,7 @@ class ShowCourseActivity : AppCompatActivity() {
                         val intent = Intent(this@ShowCourseActivity, LessonsActivity::class.java)
                         intent.putExtra("LESSON", mdl)
                         startActivity(intent)
+                        finish()
                         println("$modul  $lessonXX")
                     } else {
                         Log.e("QUIZZ", lessonXX.quiz)
@@ -98,6 +101,7 @@ class ShowCourseActivity : AppCompatActivity() {
                         val intent = Intent(this@ShowCourseActivity, TestActivity::class.java)
                         intent.putExtra("LESSON", mdl)
                         startActivity(intent)
+
                     }
                 }
             }, this)

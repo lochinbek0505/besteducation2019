@@ -1,6 +1,7 @@
 package com.example.besteducation2019.ui.activitys
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
@@ -60,12 +61,12 @@ class LessonsActivity : AppCompatActivity() {
 
                 val request = apiService.lessonDeatile(data.id1, data.id2, data.id3)
                 println(request.body())
-                Log.e("ANLZYE4",request.toString())
+                Log.e("ANLZYE4", request.toString())
 
                 if (request.isSuccessful) {
                     var body = request.body() as lesson_datailes
                     display(body.data.lesson)
-                    Log.e("ANLZYE4",body.toString())
+                    Log.e("ANLZYE4", body.toString())
                 }
 
             } catch (e: Exception) {
@@ -75,6 +76,7 @@ class LessonsActivity : AppCompatActivity() {
             }
         }
     }
+
     fun end(data: lesson_id_model) {
 
 
@@ -88,10 +90,11 @@ class LessonsActivity : AppCompatActivity() {
 
                 val request = apiService.endLessons(request_end(data.id3))
                 println(request.body())
-                Log.e("ANLZYE4",request.toString())
+                Log.e("ANLZYE4", request.toString())
 
                 if (request.isSuccessful) {
-                   finish()
+                    startActivity(Intent(this@LessonsActivity, ShowCourseActivity::class.java))
+                    finish()
                 }
 
             } catch (e: Exception) {
@@ -202,7 +205,7 @@ class LessonsActivity : AppCompatActivity() {
 
 
         }
-        Log.e("ANLZYE",model.resource.toString())
+        Log.e("ANLZYE", model.resource.toString())
 
 
         binding.prLessons.initWithUrl(
