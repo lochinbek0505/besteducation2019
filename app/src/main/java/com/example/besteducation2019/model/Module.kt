@@ -10,8 +10,8 @@ data class Module(
     @SerializedName("count_students") var countStudents : Int,
     @SerializedName("count_finishers") var countFinishers : Int,
     @SerializedName("count_lessons") var countLessons : Int,
-    @SerializedName("students") var students : List<String>,
-    @SerializedName("finishers") var finishers : List<String>,
+    @SerializedName("students") var students : Any,
+    @SerializedName("finishers") var finishers : Any,
     @SerializedName("lessons") var lessons : List<Lesson>,
     @SerializedName("is_open") var isOpen : Boolean
 

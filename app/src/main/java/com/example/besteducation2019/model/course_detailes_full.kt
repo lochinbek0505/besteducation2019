@@ -1,12 +1,10 @@
-// YApi QuickType插件生成，具体参考文档:https://plugins.jetbrains.com/plugin/18847-yapi-quicktype/documentation
-
 package com.example.besteducation2019.model
 
 import com.google.gson.annotations.SerializedName
 
 data class course_detailes_full(
     @SerializedName("status") var status : String,
-    @SerializedName("errors") var errors : Errors,
+    @SerializedName("errors") var errors : Any,
     @SerializedName("data") var data : Data4
 )
 

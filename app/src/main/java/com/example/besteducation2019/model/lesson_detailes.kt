@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class lesson_datailes (
 
     @SerializedName("status") var status : String,
-    @SerializedName("errors") var errors : Errors,
+    @SerializedName("errors") var errors : Any,
     @SerializedName("data") var data : Data5
 )
 
