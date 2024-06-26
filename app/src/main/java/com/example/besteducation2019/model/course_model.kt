@@ -4,7 +4,7 @@ package com.example.besteducation2019.model
 
 data class course_model (
     val data: Data,
-    val errors: Errors,
+    val errors: Any,
     val status: String
 )
 

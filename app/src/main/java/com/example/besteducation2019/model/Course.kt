@@ -8,7 +8,7 @@ data class Course (
     val image: String,
     val author_: Author,
     val subject: String,
-    val isOpen: Boolean,
+    val is_open: Boolean,
     val price: Long,
     val count_lessons:Long,
     val length: Long,

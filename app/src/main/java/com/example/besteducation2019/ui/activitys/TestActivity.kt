@@ -1,6 +1,7 @@
 package com.example.besteducation2019.ui.activitys
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,8 @@ import com.example.besteducation2019.model.Question
 import com.example.besteducation2019.model.Quiz
 import com.example.besteducation2019.model.lesson_datailes
 import com.example.besteducation2019.model.lesson_id_model
+import com.example.besteducation2019.model.request_end
+import com.example.besteducation2019.model.test_transfer_model
 import com.example.besteducation2019.network.ApiService
 import com.example.besteducation2019.network.RetrofitBuilder
 import kotlinx.coroutines.launch
@@ -27,6 +30,10 @@ class TestActivity : AppCompatActivity() {
     var res_list = ArrayList<Answer>()
     private lateinit var dialog: AlertDialog
     private lateinit var apiService: ApiService
+    lateinit var data2: lesson_id_model
+    var index = 0
+    var foiz = 0
+    var ball = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,46 +43,108 @@ class TestActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.sekk.max = 100
 
-        val data = intent.getSerializableExtra("LESSON") as lesson_id_model
+        val data = intent.getSerializableExtra("transfer_test") as test_transfer_model
 
-        network(data)
+        data2 = intent.getSerializableExtra("lesson_id") as lesson_id_model
+
+        foiz = data.foiz
+        ball = data.ball
+        index = data.index
+
+//        network(data)
         Log.e("QUIZZ1", data.toString())
 
-
+        display(data)
         binding.sekk.setOnTouchListener { _, _ ->
             true
         }
     }
 
-    fun display(model: Quiz) {
-        var index = 0
-        var foiz = 0
+    fun display(data: test_transfer_model) {
+
+        val model = data.quiz
+
+
         val tittle = model.name
         val prs = 100 / model.questions.size
 
         val tests = model.questions
         Log.e("QUIZZ1", model.toString())
         binding.tvTittle.text = tittle
-        giveQuestion(tests, 0)
+        giveQuestion(tests, index)
+        binding.tvIndicate.text="${index+1}/${tests.size}"
         Log.e("AANNMM", tests.toString())
         binding.btnSubmit.setOnClickListener {
 
             if (response.value1 != "") {
                 if (tests.size - 1 > index) {
                     index++
-                    res_list.add(response)
+//                    res_list.add(response)
+                    if (response.isCorrect) {
+                        ball++
+                    }
+
                     response = Answer("", "", false)
-                    giveQuestion(tests, index)
                     foiz += prs * 1
                     binding.sekk.progress = foiz
+                    when (tests.get(index).json.type) {
+
+                        "one_select" -> {
+                            giveQuestion(tests, index)
+
+                        }
+
+
+                        "multi_select" -> {
+
+                            val model = test_transfer_model(model, ball, foiz, index)
+                            val intent = Intent(this, MultiselectTestActivity::class.java)
+                            intent.putExtra("transfer_test", model)
+                            intent.putExtra("lesson_id", data2)
+
+                            startActivity(intent)
+                            finish()
+
+                        }
+
+                        "matchable" -> {
+
+
+                            val model = test_transfer_model(model, ball, foiz, index)
+                            val intent = Intent(this, MatachableActivity::class.java)
+                            intent.putExtra("lesson_id", data2)
+
+                            intent.putExtra("transfer_test", model)
+                            startActivity(intent)
+                            finish()
+
+                        }
+
+                        "writeable" -> {
+                            val model = test_transfer_model(model, ball, foiz, index)
+
+                            val intent = Intent(this, WriteableTestActivity::class.java)
+
+                            intent.putExtra("lesson_id", data2)
+                            intent.putExtra("transfer_test", model)
+                            startActivity(intent)
+                            finish()
+
+                        }
+
+
+                    }
+
                     println("Javob : $response")
                 } else {
+                    if (response.isCorrect) {
+                        ball++
+                    }
                     foiz += prs * 1
                     binding.sekk.progress = foiz
                     res_list.add(response)
                     response = Answer("", "", false)
-
-                    check(res_list, tittle)
+                    check(model, tittle)
                     println("Finished")
 
                 }
@@ -175,7 +244,7 @@ class TestActivity : AppCompatActivity() {
 
 //                         Ensure body.data.lesson.quiz is not null and within bounds
                         body.data?.lesson?.quiz?.let { quiz ->
-                            display(quiz)
+//                            display(quiz)
                         } ?: run {
                             Log.e("ANLZYE4", "Quiz data is null or out of bounds")
                         }
@@ -192,19 +261,18 @@ class TestActivity : AppCompatActivity() {
         }
     }
 
-    fun check(response: ArrayList<Answer>, title: String) {
+    fun check(response: Quiz, title: String) {
 
-        var ball = 0
 
-        var index = 0
-        for (question in response) {
-            if (question.isCorrect) {
-
-                ball++
-
-            }
-            index++
-        }
+//        var index = 0
+//        for (question in response) {
+//            if (question.isCorrect) {
+//
+//                ball++
+//
+//            }
+//            index++
+//        }
 
 
         val builder = AlertDialog.Builder(this)
@@ -218,14 +286,44 @@ class TestActivity : AppCompatActivity() {
 
         var buttonClose = dialog.findViewById<Button>(R.id.buttonClose)
         dialog.findViewById<TextView>(R.id.textView2)?.text = "To'g'ri javoblar : $ball"
-        dialog.findViewById<TextView>(R.id.textView3)?.text = "Noto'g'ri javoblar : ${index - ball}"
+        dialog.findViewById<TextView>(R.id.textView3)?.text =
+            "Noto'g'ri javoblar : ${response.questions.size - ball}"
         dialog.findViewById<TextView>(R.id.textView1)?.text = title
 
         buttonClose!!.setOnClickListener {
+            end(data2)
             dialog.dismiss()
             finish()
         }
 
 
     }
+
+    fun end(data: lesson_id_model) {
+
+
+        apiService =
+            RetrofitBuilder.create(readFromSharedPreferences(this, "TOKEN", ""))
+
+        lifecycleScope.launch {
+
+            try {
+
+
+                val request = apiService.endLessons(request_end(data.id3))
+                println(request.body())
+                Log.e("ANLZYE4", request.toString())
+
+                if (request.isSuccessful) {
+                    finish()
+                }
+
+            } catch (e: Exception) {
+                Log.e("ANLZYE4", e.message.toString())
+
+                Toast.makeText(this@TestActivity, e.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 }

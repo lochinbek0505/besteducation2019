@@ -1,11 +1,16 @@
 package com.example.besteducation2019.network
 
+import com.example.besteducation2019.model.Mycourse
+import com.example.besteducation2019.model.buy_model
+import com.example.besteducation2019.model.buy_response_model
 import com.example.besteducation2019.model.course_detailes_full
 import com.example.besteducation2019.model.course_model
 import com.example.besteducation2019.model.end_model
 import com.example.besteducation2019.model.lesson_datailes
 import com.example.besteducation2019.model.login_model
 import com.example.besteducation2019.model.login_response
+import com.example.besteducation2019.model.order_model
+import com.example.besteducation2019.model.order_response
 import com.example.besteducation2019.model.register_model
 import com.example.besteducation2019.model.register_respons
 import com.example.besteducation2019.model.request_end
@@ -27,9 +32,17 @@ interface ApiService {
     fun login(@Body dataModel: login_model?): Call<login_response>
 
 
+    @POST("courses/order/")
+    suspend fun order(@Body course: order_model): Response<order_response>
 
+    @POST("courses/buy/")
+    suspend fun buy(@Body model: buy_model) :Response<buy_response_model>
     @GET("courses/")
     suspend fun courses(): Response<course_model>
+
+
+    @GET("courses/my/")
+    suspend fun myCourses(): Response<Mycourse>
 
     @POST("courses/end/")
     suspend fun endLessons(@Body id: request_end): Response<end_model>
@@ -45,7 +58,7 @@ interface ApiService {
 
     //    http://147.45.158.162:9060/courses/subjects
     //    https://besteducation.pythonanywhere.com/api/courses/course/[id]/
-//    http://147.45.158.162:9060/courses/course/1/
+    //  http://147.45.158.162:9060/courses/course/1/
     @GET("courses/course/{id}/")
     suspend fun courDetailes(@Path("id") id: String): Response<course_detailes_full>
 

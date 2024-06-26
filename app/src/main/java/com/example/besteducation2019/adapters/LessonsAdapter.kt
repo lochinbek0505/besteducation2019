@@ -10,54 +10,46 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.besteducation2019.R
 import com.example.besteducation2019.model.Lesson
+import com.example.besteducation2019.model.transfer_model
 
-class InnerAdapter(
-    private val data: List<Lesson>,
-    var isOpen: Boolean,
+class LessonsAdapter(
+    private val data: ArrayList<transfer_model>,
     var listener: ItemSetOnClickListener,
     var context: Context
 ) :
-    RecyclerView.Adapter<InnerAdapter.InnerViewHolder>() {
+    RecyclerView.Adapter<LessonsAdapter.InnerViewHolder>() {
     interface ItemSetOnClickListener {
-        fun onClick(data: Lesson)
+        fun onClick(data: transfer_model)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InnerViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.inner_item_layout, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.lessons_list_item, parent, false)
         return InnerViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: InnerViewHolder, position: Int) {
-        val test = holder.itemView.findViewById<TextView>(R.id.tv_lesson_name)
-        val image = holder.itemView.findViewById<ImageView>(R.id.is_pos)
-        test.text = data[position].name
-        if (isOpen) {
-            if (data[position].isOpen) {
-                image.setImageResource(R.drawable.play_button)
+        val test = holder.itemView.findViewById<TextView>(R.id.tv_name)
+        val image = holder.itemView.findViewById<ImageView>(R.id.iv_state)
+        test.text = data[position].lessone.name
+            if (data[position].lessone.isOpen) {
+                image.setImageResource(R.drawable.ic_ellipse)
             } else {
                 image.setImageResource(R.drawable.lock)
 
             }
-        } else {
-            image.setImageResource(R.drawable.lock)
 
-        }
         holder.itemView.setOnClickListener {
-            if (isOpen) {
 
-                if (data[position].isOpen) {
+                if (data[position].lessone.isOpen) {
                     listener.onClick(data[position])
                 } else {
 
                     Toast.makeText(context, "Oldingi dars ko'rilmagan", Toast.LENGTH_LONG).show()
 
                 }
-            } else {
-                Toast.makeText(context, "Kurs sotib olinmagan", Toast.LENGTH_LONG).show()
-
             }
-        }
+
     }
 
     override fun getItemCount(): Int {

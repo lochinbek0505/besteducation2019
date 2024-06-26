@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="sans-serif-medium"
-            android:text="Kiberxavfsizlikdan ma'ruzalar"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="20sp" />
 
@@ -63,6 +63,7 @@
             android:thumb="@drawable/custom_thumb" />
 
         <TextView
+            android:id="@+id/tv_indicate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
@@ -84,7 +85,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="50dp"
         android:fontFamily="sans-serif-medium"
-        android:text="1. Savol SHA-256 shifrlash standdarti qchon va qayerda paydo bo'lgan."
+        android:text=""
         android:textColor="@color/black"
 
         android:textSize="20sp" />
@@ -124,6 +125,7 @@
         android:layout_marginBottom="20dp"
         android:fontFamily="sans-serif-medium"
         android:padding="15dp"
+        app:cornerRadius="15dp"
         android:text="Javobni tasdiqlash"
         android:textSize="18sp" />
 

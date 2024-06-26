@@ -1,9 +1,12 @@
 package com.example.besteducation2019.ui.activitys
 
+import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -46,6 +49,22 @@ class LessonsActivity : AppCompatActivity() {
             end(data)
 
         }
+    }
+
+    private fun downloadPdf(url: String) {
+        val uri = Uri.parse(url)
+        val fileName = uri.lastPathSegment ?: "downloaded_file.pdf"
+
+        val request = DownloadManager.Request(uri)
+        request.setTitle("Downloading PDF")
+        request.setDescription("Downloading PDF file...")
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
+
+        val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadManager.enqueue(request)
+
+        Toast.makeText(this, "Download started", Toast.LENGTH_SHORT).show()
     }
 
     fun network(data: lesson_id_model) {
@@ -93,7 +112,7 @@ class LessonsActivity : AppCompatActivity() {
                 Log.e("ANLZYE4", request.toString())
 
                 if (request.isSuccessful) {
-                    startActivity(Intent(this@LessonsActivity, ShowCourseActivity::class.java))
+//                    startActivity(Intent(this@LessonsActivity, ShowCourseActivity::class.java))
                     finish()
                 }
 
@@ -114,7 +133,11 @@ class LessonsActivity : AppCompatActivity() {
 
         val url = model.video
         binding.tvName.text = model.name
+        binding.btnDownload.setOnClickListener {
 
+            downloadPdf(model.resource)
+
+        }
 //        https://youtu.be/X-WIG2k7Ruw
         val lastChar = url.substring(url.length - 1)
         if (lastChar == "/") {

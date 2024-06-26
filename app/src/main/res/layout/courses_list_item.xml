@@ -2,14 +2,14 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="120dp"
     android:layout_margin="15dp"
-    android:backgroundTint="#FDF5EA"
     app:cardCornerRadius="15dp"
     app:cardElevation="4dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="#FBF0E0"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -18,20 +18,22 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="15dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="FIZIKA"
                 android:textColor="@color/black"
-                android:textSize="24sp"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="-10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="10dp"
@@ -40,7 +42,29 @@
                 android:maxLines="1"
                 android:text="Farxod Eshonqulov "
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <SeekBar
+                    android:id="@+id/sekk"
+                    android:layout_width="190dp"
+                    android:layout_height="10dp"
+                    android:progressDrawable="@drawable/custom_progress_drawable2"
+                    android:thumb="@drawable/custom_thumb"
+                    />
+                <TextView
+                    android:id="@+id/tv_pr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="33 %"
+                    android:textColor="@color/green"
+                    />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -54,6 +78,7 @@
             app:cardCornerRadius="40dp">
 
             <ImageView
+                android:id="@+id/tv_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

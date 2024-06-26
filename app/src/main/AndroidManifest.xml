@@ -16,16 +16,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activitys.LessonsLActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activitys.PayPageActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activitys.MatachableActivity"
-            android:exported="true">
-
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".ui.activitys.MultiselectTestActivity"
             android:exported="false" />
@@ -49,7 +47,11 @@
         <activity
             android:name=".ui.activitys.SignActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activitys.HomeActivity"

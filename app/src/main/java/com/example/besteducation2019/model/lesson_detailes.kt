@@ -24,7 +24,7 @@ data class Lesson2(
     @SerializedName("resource") var resource : String,
     @SerializedName("quiz") var quiz : Quiz,
     @SerializedName("previous") var previous : Previous,
-    @SerializedName("next") var next : String,
+    @SerializedName("next") var next : Any,
 //    @SerializedName("finishers") var finishers : ArrayList<String>,
     @SerializedName("is_open") var isOpen : Boolean
 )

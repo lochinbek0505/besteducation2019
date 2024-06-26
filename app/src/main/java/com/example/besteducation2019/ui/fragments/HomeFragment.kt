@@ -16,10 +16,15 @@ import com.example.besteducation2019.adapters.HomeSubjectAdapter
 import com.example.besteducation2019.databinding.FragmentHomeBinding
 import com.example.besteducation2019.model.Course
 import com.example.besteducation2019.model.Subject
+import com.example.besteducation2019.model.buy_model
+import com.example.besteducation2019.model.buy_response_model
 import com.example.besteducation2019.model.course_model
+import com.example.besteducation2019.model.order_model
+import com.example.besteducation2019.model.order_response
 import com.example.besteducation2019.model.subject_model
 import com.example.besteducation2019.network.ApiService
 import com.example.besteducation2019.network.RetrofitBuilder
+import com.example.besteducation2019.ui.activitys.PayPageActivity
 import com.example.besteducation2019.ui.activitys.ShowCourseActivity
 import com.example.besteducation2019.utilits.DatabaseHelper
 import kotlinx.coroutines.CoroutineScope
@@ -42,25 +47,42 @@ class HomeFragment : Fragment() {
     ): View {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
         val root: View = binding.root
+
         dbHelper = DatabaseHelper(requireActivity())
+
         val users = dbHelper.readData()
+
         for (user in users) {
             binding.tvHomeName.text = "Salom , ${user.firstName}"
             Glide.with(requireActivity()).load(user.image).into(binding.ivHomeImage)
         }
+
         val token = readFromSharedPreferences(requireActivity(), "TOKEN", "")
+
         Log.e("RESPONSSSSS", "  $token ")
+
         binding.ssPullRefresh.setOnRefreshListener {
+
             CoroutineScope(Dispatchers.Main).launch {
+
                 delay(2000)
+
                 binding.ssPullRefresh.setRefreshing(false) // This stops refreshing
+//
 //                mAdapter.randomizeData()
+
                 getDataFromNetwork(token.toString())
+
                 getDataFromNetwork2(token)
+
             }
+
         }
+
         getDataFromNetwork(token.toString())
+
         getDataFromNetwork2(token)
         return root
     }
@@ -68,6 +90,79 @@ class HomeFragment : Fragment() {
     fun readFromSharedPreferences(context: Context, key: String, defaultValue: String): String {
         val sharedPref = context.getSharedPreferences("token", Context.MODE_PRIVATE)
         return sharedPref.getString(key, defaultValue) ?: defaultValue
+    }
+
+    fun pay(id: String) {
+
+
+        apiService =
+            RetrofitBuilder.create(readFromSharedPreferences(requireActivity(), "TOKEN", ""))
+
+        lifecycleScope.launch {
+            try {
+                // Add debug logs to check the ids
+//                Log.d(
+//                    "ANLZYE4",
+//                    "data.id1: ${data.id1}, data.id2: ${data.id2}, data.id3: ${data.id3}"
+//                )
+
+                val request = apiService.order(order_model(id))
+
+                if (request.isSuccessful) {
+                    val body = request.body() as? order_response
+                    if (body!!.status == "success") {
+                        Log.e("ANLZYE5", body.toString())
+
+                        lifecycleScope.launch {
+
+                            try {
+
+                                val request2 =
+                                    apiService.buy(buy_model(body.data.order_id.toString(), id))
+                                if (request2.isSuccessful) {
+
+                                    val body2 = request2.body() as? buy_response_model
+                                    if (body2!!.status == "success") {
+                                        Log.e("ANLZYE5", body2.toString())
+                                        val intent = Intent(
+                                            requireActivity(),
+                                            PayPageActivity::class.java
+                                        )
+                                        intent.putExtra("URL", body2.data.link)
+                                        startActivity(intent)
+                                        requireActivity().finish()
+                                    } else {
+                                        Log.e("ANLZYE5", body2.errors.toString())
+                                    }
+
+                                }
+
+                            } catch (e: Exception) {
+                                Log.e("ANLZYE5", e.message.toString())
+
+                            }
+
+                        }
+
+                    } else {
+                        Toast.makeText(
+                            requireActivity(),
+                            body.errors.toString(),
+                            Toast.LENGTH_LONG
+                        ).show()
+                        Log.e("ANLZYE4", "Response body is null")
+                    }
+                } else {
+                    Log.e("ANLZYE4", "Request not successful: ${request.code()}")
+                }
+            } catch (e: Exception) {
+                Log.e("ANLZYE4", e.message.toString())
+                Toast.makeText(requireActivity(), e.message.toString(), Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+
     }
 
     fun getDataFromNetwork(token: String) {
@@ -229,13 +324,19 @@ class HomeFragment : Fragment() {
             list,
             object : HomeCoursesAdapter.ItemSetOnClickListener {
                 override fun onClick(data: Course) {
-                    Log.e("ANLYZE", data.toString())
+                    Log.e("ANLYZE", data.is_open.toString())
 
                     val intent = Intent(requireActivity(), ShowCourseActivity::class.java)
                     intent.putExtra("id_course", data.id.toString())
                     startActivity(intent)
-            }
-        })
+                }
+            },
+            object : HomeCoursesAdapter.ItemSetOnClickListener2 {
+                override fun onClick(id: String) {
+                    pay(id)
+                }
+
+            })
 
         binding.rvCourses.adapter = adapter1
 

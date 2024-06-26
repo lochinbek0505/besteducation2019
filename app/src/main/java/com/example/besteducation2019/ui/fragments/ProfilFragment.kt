@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example.besteducation2019.databinding.FragmentProfilBinding
 import com.example.besteducation2019.network.ApiService
 import com.example.besteducation2019.network.RetrofitBuilder
@@ -36,14 +37,13 @@ class ProfilFragment : Fragment() {
         _binding = FragmentProfilBinding.inflate(inflater, container, false)
         val root: View = _binding!!.root
         dbHelper = DatabaseHelper(requireActivity())
-
-        _binding!!.rlDelete.setOnClickListener {
-
-            end()
-        }
+        var data = dbHelper.readData().get(0)
+        Glide.with(requireActivity()).load(dbHelper.readData().get(0).image)
+            .into(_binding!!.ivProfil)
+        _binding!!.tvProfilName.text = "${data.firstName} ${data.lastName}"
         _binding!!.rlLogout.setOnClickListener {
 
-            logout()
+            end()
 
         }
         return root
@@ -105,6 +105,7 @@ class ProfilFragment : Fragment() {
         val sharedPref = context.getSharedPreferences("token", Context.MODE_PRIVATE)
         return sharedPref.getString(key, defaultValue) ?: defaultValue
     }
+
     companion object {
 
         @JvmStatic
