@@ -7,10 +7,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.example.besteducation2019.R
 import com.example.besteducation2019.adapters.HomeCoursesAdapter
 import com.example.besteducation2019.adapters.HomeSubjectAdapter
 import com.example.besteducation2019.databinding.FragmentHomeBinding
@@ -26,10 +29,10 @@ import com.example.besteducation2019.network.ApiService
 import com.example.besteducation2019.network.RetrofitBuilder
 import com.example.besteducation2019.ui.activitys.PayPageActivity
 import com.example.besteducation2019.ui.activitys.ShowCourseActivity
+import com.example.besteducation2019.ui.activitys.SignActivity
 import com.example.besteducation2019.utilits.DatabaseHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -38,8 +41,10 @@ class HomeFragment : Fragment() {
 
     private val binding get() = _binding!!
     private lateinit var dbHelper: DatabaseHelper
-
+    private lateinit var array_list: MutableList<Course>
     private lateinit var apiService: ApiService
+    private lateinit var re_adapter: HomeCoursesAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,27 +54,45 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         val root: View = binding.root
-
+        array_list = emptyList<Course>().toMutableList()
+//        re_adapter=HomeCoursesAdapter(array_list,object :HomeCoursesAdapter.ItemSetOnClickListener)
         dbHelper = DatabaseHelper(requireActivity())
-
+//        val customDialog = CustomLottieDialog(requireActivity())
+//        customDialog.show()
         val users = dbHelper.readData()
 
         for (user in users) {
             binding.tvHomeName.text = "Salom , ${user.firstName}"
-            Glide.with(requireActivity()).load(user.image).into(binding.ivHomeImage)
+            Glide.with(requireActivity()).load("https://bestedu.uz${user.image}").into(binding.ivHomeImage)
         }
 
+//        getUserData(users.get(0).id)
         val token = readFromSharedPreferences(requireActivity(), "TOKEN", "")
 
         Log.e("RESPONSSSSS", "  $token ")
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
 
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (!array_list.isEmpty()) {
+
+                    filter(newText)
+                }
+                return true
+            }
+        })
+
+//        val searchAutoComplete = binding.searchView.findViewById<SearchView.SearchAutoComplete>(androidx.appcompat.R.id.search_src_text)
+//
+//        // Set the hint text color
+//        searchAutoComplete.setHintTextColor(Color.GRAY)
         binding.ssPullRefresh.setOnRefreshListener {
 
             CoroutineScope(Dispatchers.Main).launch {
 
-                delay(2000)
 
-                binding.ssPullRefresh.setRefreshing(false) // This stops refreshing
 //
 //                mAdapter.randomizeData()
 
@@ -165,6 +188,13 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun filter(text: String?) {
+        val filteredList = array_list.filter {
+            it.name.contains(text ?: "", ignoreCase = true)
+        }
+        re_adapter.updateList(filteredList)
+    }
+
     fun getDataFromNetwork(token: String) {
 
         apiService =
@@ -173,7 +203,7 @@ class HomeFragment : Fragment() {
         lifecycleScope.launch {
 
             try {
-                Log.e("RESPONSSSSS", "  ${apiService.courses().isSuccessful} ")
+                Log.e("RESPONSSSSS1", "  ${apiService.courses().isSuccessful} ")
 
                 if (apiService.courses().isSuccessful) {
 
@@ -183,6 +213,9 @@ class HomeFragment : Fragment() {
 
                     Log.e("RESPONSSSSS", "  ${body} ")
 
+                }
+                else{
+                    logout()
                 }
 
             } catch (e: Exception) {
@@ -207,6 +240,26 @@ class HomeFragment : Fragment() {
 
 
     }
+
+    fun saveToSharedPreferences(context: Context, key: String, value: String) {
+        val sharedPref = context.getSharedPreferences("token", Context.MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            putString(key, value)
+            apply()
+        }
+    }
+
+    fun logout() {
+        saveToSharedPreferences(requireActivity(), "TOKEN", "")
+        val users = dbHelper.readData()
+        for (user in users) {
+
+            dbHelper.deleteUser(user.id!!)
+        }
+        startActivity(Intent(requireActivity(), SignActivity::class.java))
+        requireActivity().finish()
+    }
+
 
     fun getDataFromNetwork3(token: String, id: String) {
 
@@ -269,6 +322,9 @@ class HomeFragment : Fragment() {
 
                     Log.e("RESPONSSSSS", "  ${body} ")
 
+                }else{
+                    logout()
+
                 }
 
             } catch (e: Exception) {
@@ -295,8 +351,10 @@ class HomeFragment : Fragment() {
     }
 
     fun adapter2(model: subject_model, token: String) {
+        binding.ssPullRefresh.setRefreshing(false) // This stops refreshing
 
         var listt = model.data.subjects.toMutableList()
+        binding.anim.visibility = View.GONE
 
         listt.add(0, Subject("Barchasi", -1))
         binding.rvCategory.adapter = HomeSubjectAdapter(
@@ -317,12 +375,14 @@ class HomeFragment : Fragment() {
     }
 
     fun adapter(list: MutableList<Course>) {
-
-
-        val adapter1 = HomeCoursesAdapter(
+        binding.anim.visibility = View.GONE
+        array_list = list
+        val controller =
+            AnimationUtils.loadLayoutAnimation(requireActivity(), R.anim.layout_right_to_left)
+        binding.rvCourses.layoutAnimation = controller
+        re_adapter = HomeCoursesAdapter(
             requireActivity(),
-            list,
-            object : HomeCoursesAdapter.ItemSetOnClickListener {
+            array_list, object : HomeCoursesAdapter.ItemSetOnClickListener {
                 override fun onClick(data: Course) {
                     Log.e("ANLYZE", data.is_open.toString())
 
@@ -338,12 +398,13 @@ class HomeFragment : Fragment() {
 
             })
 
-        binding.rvCourses.adapter = adapter1
+        binding.rvCourses.adapter = re_adapter
 
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+//        _binding!!.anim.visibility = View.GONE
     }
 }

@@ -2,13 +2,13 @@
 
 package com.example.besteducation2019.model
 
-data class course_model (
+data class course_model(
     val data: Data,
     val errors: Any,
     val status: String
 )
 
-data class Data (
+data class Data(
     val courses: List<Course>
 )
 

@@ -99,6 +99,7 @@ class RegisterFragment : Fragment() {
     }
 
     fun getRegister(model: register_model) {
+        binding.anim.visibility = View.VISIBLE
 
         request.apiService.register(model).enqueue(object : Callback<register_respons> {
             override fun onResponse(
@@ -117,8 +118,7 @@ class RegisterFragment : Fragment() {
                     Log.e("RESPONSSSSS", "  ${respons_model.errors} $p0")
 
 
-                }
-                else{
+                } else {
 
 
                     Toast.makeText(

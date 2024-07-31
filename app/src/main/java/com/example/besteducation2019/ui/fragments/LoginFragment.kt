@@ -9,14 +9,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.besteducation2019.databinding.FragmentLoginBinding
-import com.example.besteducation2019.model.Author
+import com.example.besteducation2019.model.User
 import com.example.besteducation2019.model.login_model
 import com.example.besteducation2019.model.login_response
+import com.example.besteducation2019.model.profil_detailes
 import com.example.besteducation2019.network.ApiClient
+import com.example.besteducation2019.network.ApiService
+import com.example.besteducation2019.network.RetrofitBuilder
 import com.example.besteducation2019.ui.activitys.HomeActivity
+import com.example.besteducation2019.utilits.CustomLottieDialog
 import com.example.besteducation2019.utilits.DatabaseHelper
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,8 +31,9 @@ import retrofit2.Response
 class LoginFragment : Fragment() {
     private lateinit var request: ApiClient
     private lateinit var dbHelper: DatabaseHelper
-
+    private lateinit var dialog: CustomLottieDialog
     private lateinit var binding: FragmentLoginBinding
+    private lateinit var apiService: ApiService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,8 +44,8 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding= FragmentLoginBinding.inflate(inflater,container,false)
-
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        dialog = CustomLottieDialog(requireActivity())
         binding.tvRo.setOnClickListener {
 
             findNavController().navigateUp()
@@ -47,8 +54,8 @@ class LoginFragment : Fragment() {
 
         val token = readFromSharedPreferences(requireActivity(), "TOKEN", "")
 
-        if (!token.isEmpty()){
-            startActivity(Intent(requireActivity(),HomeActivity::class.java))
+        if (!token.isEmpty()) {
+            startActivity(Intent(requireActivity(), HomeActivity::class.java))
             requireActivity().finish()
         }
 
@@ -94,9 +101,10 @@ class LoginFragment : Fragment() {
 
     fun getRegister(model: login_model) {
         dbHelper = DatabaseHelper(requireActivity())
+        binding.anim.visibility = View.VISIBLE
 
         // Example of adding a user
-
+        dialog.show()
         request.apiService.login(model).enqueue(object : Callback<login_response> {
             override fun onResponse(
                 p0: Call<login_response>,
@@ -111,27 +119,43 @@ class LoginFragment : Fragment() {
 
                 if (respons_model.status == "success") {
 
-                    saveToSharedPreferences(requireActivity(),"TOKEN",respons_model.data.token)
-                    if (respons_model.data.image.isNullOrEmpty()){
-                        val newUser = Author(respons_model.data.id, "", respons_model.data.firstName, respons_model.data.lastName, "", "")
-                        dbHelper.addUser(newUser)
 
-                    }else{
-                        val newUser = Author(respons_model.data.id, "", respons_model.data.firstName, respons_model.data.lastName, "", respons_model.data.image)
-                        dbHelper.addUser(newUser)
+                    getUserData(respons_model.data.token, respons_model.data.id)
 
-                    }
-                    startActivity(Intent(requireActivity(),HomeActivity::class.java))
-                    requireActivity().finish()
+//                    if (respons_model.data.image.isNullOrEmpty()) {
+//                        val newUser = Author(
+//                            respons_model.data.id,
+//                            binding.etNumber.text.toString(),
+//                            respons_model.data.firstName,
+//                            respons_model.data.lastName,
+//                            "",
+//                            ""
+//                        )
+//                        dbHelper.addUser(newUser)
+//
+//                    } else {
+//                        val newUser = Author(
+//                            respons_model.data.id,
+//                            binding.etNumber.text.toString(),
+//                            respons_model.data.firstName,
+//                            respons_model.data.lastName,
+//                            "",
+//                            respons_model.data.image
+//                        )
+//                        dbHelper.addUser(newUser)
+//
+//                    }
+//                    dialog.dismiss()
+
                     Toast.makeText(
                         requireActivity(),
                         respons_model.data.token,
                         Toast.LENGTH_LONG
                     ).show()
-                    Log.e("RESPONSSSSS","  ${respons_model.errors} $p0")
+                    Log.e("show_data", "  ${respons_model} $p0")
 
-                }
-                else{
+                } else {
+                    dialog.dismiss()
 
 
                     Toast.makeText(
@@ -139,7 +163,7 @@ class LoginFragment : Fragment() {
                         respons_model.errors.toString(),
                         Toast.LENGTH_LONG
                     ).show()
-                    Log.e("RESPONSSSSS","  ${respons_model.errors} $p0")
+                    Log.e("RESPONSSSSS", "  ${respons_model.errors} $p0")
 
                 }
 
@@ -147,18 +171,73 @@ class LoginFragment : Fragment() {
 
             override fun onFailure(p0: Call<login_response>, respons: Throwable) {
                 println("RESPONSSSSS  ${respons.message} $p0")
+                dialog.dismiss()
                 Toast.makeText(
                     requireActivity(),
                     respons.message,
                     Toast.LENGTH_LONG
                 ).show()
-                Log.e("RESPONSSSSS","  ${respons.message} $p0")
+                Log.e("RESPONSSSSS", "  ${respons.message} $p0")
 
             }
         })
 
 
     }
+
+    private fun getUserData(token: String, id: Int) {
+
+        apiService =
+            RetrofitBuilder.create(token)
+
+        lifecycleScope.launch {
+
+            try {
+                Log.e(
+                    "show_data",
+                    "  ${apiService.profilInformation(id.toString())} "
+                )
+
+                if (apiService.profilInformation(id.toString()).isSuccessful) {
+
+                    val body = apiService.profilInformation(id.toString()).body() as profil_detailes
+                    dialog.dismiss()
+                    val user_author = body.data!!.user
+                    val newUser = User(
+                        user_author!!.id!!.toInt(),
+                        user_author.username!!,
+                        user_author.firstName!!,
+                        user_author.lastName.toString(),
+                        user_author.middleName.toString(),
+                        user_author.bio.toString(),
+                        user_author.isStudent.toString()
+                    )
+                    dbHelper.addUser(user_author)
+                    saveToSharedPreferences(requireActivity(), "TOKEN", token)
+
+                    startActivity(Intent(requireActivity(), HomeActivity::class.java))
+                    requireActivity().finish()
+
+
+                    Log.e("show_data", "  ${body} ")
+
+                }else{
+                    dialog.dismiss()
+                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                }
+
+            } catch (e: Exception) {
+                dialog.dismiss()
+
+                Log.e("show_data", "  ${e.message} ")
+
+            }
+
+
+        }
+
+    }
+
     // Save data to Shared Preferences
     fun saveToSharedPreferences(context: Context, key: String, value: String) {
         val sharedPref = context.getSharedPreferences("token", Context.MODE_PRIVATE)
@@ -167,6 +246,7 @@ class LoginFragment : Fragment() {
             apply()
         }
     }
+
     // Read data from Shared Preferences
     fun readFromSharedPreferences(context: Context, key: String, defaultValue: String): String {
         val sharedPref = context.getSharedPreferences("token", Context.MODE_PRIVATE)

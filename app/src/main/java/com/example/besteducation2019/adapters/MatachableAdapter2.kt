@@ -59,7 +59,7 @@ class MatachableAdapter2(
             notifyItemChanged(selectedPosition)
 
             // Trigger the listener
-            listener.onClick(item,selectedPosition)
+            listener.onClick(item, selectedPosition)
         }
     }
 
@@ -69,5 +69,6 @@ class MatachableAdapter2(
             notifyItemChanged(i)
         }
     }
+
     override fun getItemCount(): Int = items.count()
 }

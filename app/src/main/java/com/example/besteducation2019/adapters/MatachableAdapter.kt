@@ -42,12 +42,14 @@ class MatachableAdapter(
             MatchableItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
     }
+
     fun resetAllItemBackgrounds() {
         selectedPosition = RecyclerView.NO_POSITION
         for (i in items.indices) {
             notifyItemChanged(i)
         }
     }
+
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val item = items[position]
         holder.bind(item, position == selectedPosition)
@@ -64,7 +66,7 @@ class MatachableAdapter(
             notifyItemChanged(selectedPosition)
 
             // Trigger the listener
-            listener.onClick(item,selectedPosition)
+            listener.onClick(item, selectedPosition)
         }
     }
 

@@ -2,7 +2,7 @@
 
 package com.example.besteducation2019.model
 
-data class end_model (
+data class end_model(
     val data: Data7,
     val errors: Data,
     val status: String

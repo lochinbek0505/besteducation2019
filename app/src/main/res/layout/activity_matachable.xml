@@ -94,6 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_question"
+        android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
@@ -101,6 +102,7 @@
             android:id="@+id/rv_mat1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/matchable_item" />
 
@@ -108,6 +110,8 @@
             android:id="@+id/rv_mat2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/matchable_item" />
 
@@ -125,9 +129,9 @@
         android:layout_marginBottom="20dp"
         android:fontFamily="sans-serif-medium"
         android:padding="15dp"
-        app:cornerRadius="15dp"
         android:text="Javobni tasdiqlash"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:cornerRadius="15dp" />
 
     <!--    </RelativeLayout>-->
     <!--</ScrollView>-->

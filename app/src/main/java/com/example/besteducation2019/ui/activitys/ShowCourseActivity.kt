@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -46,6 +47,7 @@ class ShowCourseActivity : AppCompatActivity() {
 
         }
 
+
     }
 
     override fun onResume() {
@@ -54,6 +56,7 @@ class ShowCourseActivity : AppCompatActivity() {
 
         getDataFromNetwork(id.toString())
     }
+
     fun getDataFromNetwork(id: String) {
 
 
@@ -83,7 +86,9 @@ class ShowCourseActivity : AppCompatActivity() {
 
 
     fun setDisplay(model: Course2, id: String) {
-//
+//4
+        binding.anim.visibility = View.GONE
+
         Log.e("ANLYZE", model.toString())
         var outerData = model.modules
         var list = arrayListOf<Module>()
@@ -92,7 +97,11 @@ class ShowCourseActivity : AppCompatActivity() {
                 list.add(outerDatum)
             }
         }
+        if (model.isOpen) {
 
+            binding.btnBuy.visibility = View.GONE
+
+        }
         binding.outerRecyclerView.adapter =
             OuterAdapter(list, object : OuterAdapter.ItemSetOnClickListener {
                 override fun onClick(modul: Module, lessonXX: Lesson) {
@@ -126,12 +135,12 @@ class ShowCourseActivity : AppCompatActivity() {
         binding.tvDescription.text = model.description
         binding.tvFeedback.text = model.feedback.toString()
         binding.tvPrice.text = "${model.price} so'm"
-        binding.tvParticantCount.text="${model.countStudents} ta "
+        binding.tvParticantCount.text = "${model.countStudents} ta "
 //        binding.tvParticantCount.text=model.
 
         binding.tvTeacherName.text = "${model.author_.firstName} ${model.author_.lastName}"
         binding.tvLessonsLen.text = "${model.countModules} ta videodars"
-//        binding.tvTestsLen.text = "${model.} ta sinov testi"
+        binding.tvTestsLen.text = "${model.quizzes_count} ta sinov testi"
         val len = model.length
 
         if (len / 60 != 0) {
@@ -141,10 +150,12 @@ class ShowCourseActivity : AppCompatActivity() {
             binding.tvVideoLen.text = "${len % 60} min"
         }
         Glide.with(this).load(model.image).into(binding.ivAscBanner)
-        Glide.with(this).load("http://147.45.158.162:9060/${model.author_.image}")
+        Glide.with(this).load("https://bestedu.uz${model.author_.image}")
             .into(binding.ivTeacher)
 
     }
+
+//    "https://bestedu.uz${dbHelper.readData().get(0).image}"
 
     fun startTests(data: lesson_id_model) {
         apiService = RetrofitBuilder.create(readFromSharedPreferences(this, "TOKEN", ""))
@@ -167,7 +178,7 @@ class ShowCourseActivity : AppCompatActivity() {
 //                         Ensure body.data.lesson.quiz is not null and within bounds
                         body.data?.lesson?.quiz?.let { quiz ->
 //                          display(quiz)
-                            showTests(quiz,data)
+                            showTests(quiz, data)
                         } ?: run {
                             Log.e("ANLZYE4", "Quiz data is null or out of bounds")
                         }
@@ -272,7 +283,7 @@ class ShowCourseActivity : AppCompatActivity() {
             }
 
 
-            "multi_select" -> {
+            "many_select" -> {
 
                 val model = test_transfer_model(model, 0, 0, 0)
                 val intent = Intent(this, MultiselectTestActivity::class.java)
@@ -293,7 +304,7 @@ class ShowCourseActivity : AppCompatActivity() {
 
             }
 
-            "writeable" -> {
+            "writable" -> {
                 val model = test_transfer_model(model, 0, 0, 0)
                 val intent = Intent(this, WriteableTestActivity::class.java)
                 intent.putExtra("transfer_test", model)

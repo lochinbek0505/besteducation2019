@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class request_end(
 
-    @SerializedName("id") var id:String
+    @SerializedName("id") var id: String
 
 )

@@ -4,7 +4,7 @@ import java.io.Serializable
 
 data class transfer_model(
 
-    val lessone:Lesson,
-    val modul_id:Int
+    val lessone: Lesson,
+    val modul_id: Int
 
-):Serializable
+) : Serializable

@@ -5,9 +5,9 @@ import java.io.Serializable
 data class test_transfer_model(
 
     val quiz: Quiz,
-    val ball:Int,
-    val foiz:Int,
-    val index:Int
+    val ball: Int,
+    val foiz: Int,
+    val index: Int
 
 
-):Serializable
+) : Serializable

@@ -9,8 +9,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:background="#FBF0E0"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FBF0E0">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -23,10 +23,11 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:ellipsize="end"
+                android:maxLength="20"
                 android:maxLines="1"
                 android:text="FIZIKA"
                 android:textColor="@color/black"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -43,25 +44,26 @@
                 android:text="Farxod Eshonqulov "
                 android:textColor="@color/black"
                 android:textSize="15sp" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
+
                 <SeekBar
                     android:id="@+id/sekk"
                     android:layout_width="190dp"
                     android:layout_height="10dp"
                     android:progressDrawable="@drawable/custom_progress_drawable2"
-                    android:thumb="@drawable/custom_thumb"
-                    />
+                    android:thumb="@drawable/custom_thumb" />
+
                 <TextView
                     android:id="@+id/tv_pr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="33 %"
-                    android:textColor="@color/green"
-                    />
+                    android:textColor="@color/green" />
 
             </LinearLayout>
 

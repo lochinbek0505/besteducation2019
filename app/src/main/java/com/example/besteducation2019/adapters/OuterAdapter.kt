@@ -43,7 +43,8 @@ class OuterAdapter(
 
             test.text = "${position + 1} . ${outerData[position].name}"
             val modul = outerData[position]
-            val adapter = InnerAdapter(outerData[position].lessons,modul.isOpen,
+            val adapter = InnerAdapter(
+                outerData[position].lessons, modul.isOpen,
                 object : InnerAdapter.ItemSetOnClickListener {
 
                     override fun onClick(data: Lesson) {
@@ -54,11 +55,16 @@ class OuterAdapter(
 
                 }, context
             )
-            val adapter2 = InnerAdapter(emptyList(), modul.isOpen,object : InnerAdapter.ItemSetOnClickListener {
-                override fun onClick(data: Lesson) {
+            val adapter2 = InnerAdapter(
+                emptyList(),
+                modul.isOpen,
+                object : InnerAdapter.ItemSetOnClickListener {
+                    override fun onClick(data: Lesson) {
 
-                }
-            }, context)
+                    }
+                },
+                context
+            )
             var check = true
 
             holder.itemView.setOnClickListener {

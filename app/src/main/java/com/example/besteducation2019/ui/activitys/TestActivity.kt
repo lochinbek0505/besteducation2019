@@ -4,9 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +15,9 @@ import com.example.besteducation2019.model.Question
 import com.example.besteducation2019.model.Quiz
 import com.example.besteducation2019.model.lesson_datailes
 import com.example.besteducation2019.model.lesson_id_model
+import com.example.besteducation2019.model.rate_request
 import com.example.besteducation2019.model.request_end
+import com.example.besteducation2019.model.test_result
 import com.example.besteducation2019.model.test_transfer_model
 import com.example.besteducation2019.network.ApiService
 import com.example.besteducation2019.network.RetrofitBuilder
@@ -72,7 +71,7 @@ class TestActivity : AppCompatActivity() {
         Log.e("QUIZZ1", model.toString())
         binding.tvTittle.text = tittle
         giveQuestion(tests, index)
-        binding.tvIndicate.text="${index+1}/${tests.size}"
+        binding.tvIndicate.text = "${index + 1}/${tests.size}"
         Log.e("AANNMM", tests.toString())
         binding.btnSubmit.setOnClickListener {
 
@@ -95,7 +94,7 @@ class TestActivity : AppCompatActivity() {
                         }
 
 
-                        "multi_select" -> {
+                        "many_select" -> {
 
                             val model = test_transfer_model(model, ball, foiz, index)
                             val intent = Intent(this, MultiselectTestActivity::class.java)
@@ -120,7 +119,7 @@ class TestActivity : AppCompatActivity() {
 
                         }
 
-                        "writeable" -> {
+                        "writable" -> {
                             val model = test_transfer_model(model, ball, foiz, index)
 
                             val intent = Intent(this, WriteableTestActivity::class.java)
@@ -274,32 +273,44 @@ class TestActivity : AppCompatActivity() {
 //            index++
 //        }
 
-
-        val builder = AlertDialog.Builder(this)
-        val inflater = LayoutInflater.from(this)
-        val dialogView = inflater.inflate(R.layout.custom_dialog_layout, null)
-
-        builder.setView(dialogView)
-        dialog = builder.create()
-        dialog.setCancelable(false)
-        dialog.show()
-
-        var buttonClose = dialog.findViewById<Button>(R.id.buttonClose)
-        dialog.findViewById<TextView>(R.id.textView2)?.text = "To'g'ri javoblar : $ball"
-        dialog.findViewById<TextView>(R.id.textView3)?.text =
-            "Noto'g'ri javoblar : ${response.questions.size - ball}"
-        dialog.findViewById<TextView>(R.id.textView1)?.text = title
-
-        buttonClose!!.setOnClickListener {
-            end(data2)
-            dialog.dismiss()
-            finish()
-        }
-
-
+        end(data2, response, title)
+        endQuiz(data2)
     }
 
-    fun end(data: lesson_id_model) {
+    fun endQuiz(data: lesson_id_model) {
+
+
+        apiService =
+            RetrofitBuilder.create(readFromSharedPreferences(this, "TOKEN", ""))
+
+        lifecycleScope.launch {
+
+            try {
+
+
+                val request = apiService.saveRating(rate_request(data.id1,data.id3,data.id2,foiz,ball))
+
+                println(request.body())
+                Log.e("ANLZYE455", request.body().toString())
+
+                if (request.isSuccessful) {
+
+//                    val intent = Intent(this@TestActivity, TestResultActivity::class.java)
+//                    intent.putExtra("TRA", test_result(title, ball, response.questions.size))
+//                    startActivity(intent)
+//                    finish()
+                }
+
+            } catch (e: Exception) {
+                Log.e("ANLZYE4", e.message.toString())
+
+                Toast.makeText(this@TestActivity, e.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
+    fun end(data: lesson_id_model, response: Quiz, title: String) {
 
 
         apiService =
@@ -315,6 +326,9 @@ class TestActivity : AppCompatActivity() {
                 Log.e("ANLZYE4", request.toString())
 
                 if (request.isSuccessful) {
+                    val intent = Intent(this@TestActivity, TestResultActivity::class.java)
+                    intent.putExtra("TRA", test_result(title, ball, response.questions.size))
+                    startActivity(intent)
                     finish()
                 }
 
@@ -325,5 +339,6 @@ class TestActivity : AppCompatActivity() {
             }
         }
     }
+
 
 }

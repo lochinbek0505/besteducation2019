@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.activitys.WriteableTestActivity">
 
@@ -63,11 +63,11 @@
             android:thumb="@drawable/custom_thumb" />
 
         <TextView
+            android:id="@+id/tv_indicate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:text="1/10"
-            android:id="@+id/tv_indicate"
             android:textColor="#0D73E6"
             android:textSize="18sp" />
         />
@@ -85,7 +85,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="50dp"
         android:fontFamily="sans-serif-medium"
-android:text=""
+        android:text=""
         android:textColor="@color/black"
 
         android:textSize="20sp" />
@@ -94,16 +94,16 @@ android:text=""
         android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="13dp"
         android:layout_below="@id/tv_question"
+        android:layout_margin="13dp"
         android:hint="Enter your name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditText"
             android:layout_width="match_parent"
-            android:gravity="top"
             android:layout_height="250dp"
-            android:inputType="textMultiLine"/>
+            android:gravity="top"
+            android:inputType="textMultiLine" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -119,9 +119,9 @@ android:text=""
         android:layout_marginBottom="20dp"
         android:fontFamily="sans-serif-medium"
         android:padding="15dp"
-        app:cornerRadius="15dp"
         android:text="Javobni tasdiqlash"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:cornerRadius="15dp" />
 
     <!--    </RelativeLayout>-->
     <!--</ScrollView>-->

@@ -1,208 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8F7F7"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.RegisterFragment">
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       >
-       <RelativeLayout
-           android:id="@+id/fr_rl"
-           android:layout_width="match_parent"
-           android:background="@color/colorPrimary"
-           android:layout_height="?attr/actionBarSize">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/anim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="loading.json"
+            app:lottie_loop="true" />
+
+        <RelativeLayout
+            android:id="@+id/fr_rl"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary">
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Ro'yxatdan o'tish"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Ro'yxatdan o'tish"
-               android:textSize="25sp"
-               android:layout_centerInParent="true"
-               android:textStyle="bold"
-               android:textColor="@color/white"/>
+        </RelativeLayout>
 
-       </RelativeLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:scrollbars="none">
 
-       <ScrollView
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:layout_marginTop="?attr/actionBarSize"
-           android:scrollbars="none">
-           <RelativeLayout
-               android:layout_width="match_parent"
-               android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-       <androidx.cardview.widget.CardView
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           app:cardElevation="5dp"
-           android:layout_centerInParent="true"
-           android:layout_marginStart="20dp"
-           android:layout_marginEnd="20dp"
-           android:layout_marginTop="50dp"
-           android:layout_marginBottom="20dp"
-           app:cardCornerRadius="15dp"
-           >
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="5dp">
 
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:orientation="vertical"
-               android:gravity="center_horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
 
-               <com.google.android.material.textfield.TextInputLayout
-                   style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginStart="20dp"
-                   android:layout_marginEnd="20dp"
-                   android:layout_marginTop="20dp"
-                   android:hint="Ismingiz">
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:hint="Ismingiz">
 
-                   <com.google.android.material.textfield.TextInputEditText
-                       android:id="@+id/et_name"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:inputType="text"
-                       android:maxLines="1" />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:maxLines="1" />
 
-               </com.google.android.material.textfield.TextInputLayout>
-               <com.google.android.material.textfield.TextInputLayout
-                   style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginStart="20dp"
-                   android:layout_marginEnd="20dp"
-                   android:layout_marginTop="20dp"
-                   android:hint="Familyangiz">
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                   <com.google.android.material.textfield.TextInputEditText
-                       android:id="@+id/et_surname"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:inputType="text"
-                       android:maxLines="1" />
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:hint="Familyangiz">
 
-               </com.google.android.material.textfield.TextInputLayout>
-               <com.google.android.material.textfield.TextInputLayout
-                   style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginStart="20dp"
-                   android:layout_marginEnd="20dp"
-                   android:layout_marginTop="20dp"
-                   android:hint="Sharifingiz">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_surname"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:maxLines="1" />
 
-                   <com.google.android.material.textfield.TextInputEditText
-                       android:id="@+id/et_middle_name"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:inputType="text"
-                       android:maxLines="1" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-               </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:hint="Sharifingiz">
 
-               <com.google.android.material.textfield.TextInputLayout
-                   style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginStart="20dp"
-                   android:layout_marginEnd="20dp"
-                   android:layout_marginTop="20dp"
-                   android:hint="Telefon raqamingiz">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_middle_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:maxLines="1" />
 
-                   <com.google.android.material.textfield.TextInputEditText
-                       android:id="@+id/et_number"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:inputType="number"
-                       android:text="+998"
-                       android:maxLength="14"
-                       android:maxLines="1" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-               </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:hint="Telefon raqamingiz">
 
-               <com.google.android.material.textfield.TextInputLayout
-                   style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginStart="20dp"
-                   android:layout_marginEnd="20dp"
-                   android:layout_marginTop="20dp"
-                   android:hint="Parol yarating">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_number"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:maxLength="14"
+                                android:maxLines="1"
+                                android:text="+998" />
 
-                   <com.google.android.material.textfield.TextInputEditText
-                       android:id="@+id/et_pas"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:inputType="textPassword"
-                       android:maxLines="1" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-               </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:hint="Parol yarating">
 
-               <com.google.android.material.textfield.TextInputLayout
-                   style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginStart="20dp"
-                   android:layout_marginEnd="20dp"
-                   android:layout_marginTop="20dp"
-                   android:hint="Parolingizni takrorlang">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_pas"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPassword"
+                                android:maxLines="1" />
 
-                   <com.google.android.material.textfield.TextInputEditText
-                       android:id="@+id/et_pas2"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:inputType="textPassword"
-                       android:maxLines="1" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-               </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:hint="Parolingizni takrorlang">
 
-               <com.google.android.material.button.MaterialButton
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginStart="20dp"
-                   android:layout_marginEnd="20dp"
-                   android:backgroundTint="@color/colorPrimary"
-                   android:layout_marginTop="20dp"
-                   android:padding="10dp"
-                   android:textSize="18sp"
-                   android:id="@+id/btn_register"
-                   android:text="Ro'yxatdan o'tish"
-                   />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_pas2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPassword"
+                                android:maxLines="1" />
 
+                        </com.google.android.material.textfield.TextInputLayout>
 
-
-               <TextView
-                   android:id="@+id/tv_ro"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Hisobga kirish"
-                   android:layout_marginBottom="40dp"
-                   android:layout_marginTop="20dp"
-                   android:textSize="17sp"
-                   android:fontFamily="sans-serif-medium"
-                   android:textColor="@color/colorPrimary"/>
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_register"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:padding="10dp"
+                            android:text="Ro'yxatdan o'tish"
+                            android:textSize="18sp" />
 
 
-           </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_ro"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="40dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="Hisobga kirish"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="17sp" />
 
 
-
-       </androidx.cardview.widget.CardView>
-
-           </RelativeLayout>
-
-       </ScrollView>
+                    </LinearLayout>
 
 
-   </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+
+    </RelativeLayout>
 
 </FrameLayout>

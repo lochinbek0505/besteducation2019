@@ -5,7 +5,7 @@ import java.io.Serializable
 
 data class Json(
 
-    @SerializedName("question") var question : String,
-    @SerializedName("type") var type : String,
-    @SerializedName("answers") var answers : List<Answer>
-): Serializable
+    @SerializedName("question") var question: String,
+    @SerializedName("type") var type: String,
+    @SerializedName("answers") var answers: List<Answer>
+) : Serializable

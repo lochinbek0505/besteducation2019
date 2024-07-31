@@ -2,21 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    >
+    android:orientation="horizontal">
 
     <RadioButton
         android:id="@+id/radio_button"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:button="@null"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:fontFamily="sans-serif-medium"
         android:background="@drawable/custom_radio_button_background"
+        android:button="@null"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:paddingStart="15dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="10dp"
         android:textColor="@color/selector_text_color"
-        android:textSize="18sp"
-        android:gravity="center" />
+        android:textSize="18sp" />
 </LinearLayout>

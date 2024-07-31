@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,6 +10,7 @@
     tools:context=".ui.fragments.HomeFragment">
 
     <RelativeLayout
+        android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true"
@@ -38,16 +39,18 @@
             <ImageView
                 android:id="@+id/iv_home_image"
                 android:layout_width="match_parent"
-                android:scaleType="centerCrop"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
 
         </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/top2"
         android:layout_width="match_parent"
-        android:layout_height="57dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top"
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="15dp"
@@ -58,68 +61,60 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-
             android:padding="10dp">
 
-            <ImageView
-                android:id="@+id/image_search"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/ic_img" />
-
-            <EditText
-                android:id="@+id/edit_text_search"
+            <SearchView
+                android:id="@+id/search_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@id/image_search"
-                android:background="@null"
-                android:hint="Kurs qidirish"
-                android:maxLines="1"
-                android:paddingStart="15dp"
-                android:paddingEnd="5dp"
-                android:textColor="@android:color/black"
-                android:textColorHint="@color/black"
-                android:textSize="18sp" />
+                android:layout_height="40dp"
+                android:queryHint="Kurslarni qidirish"
+                android:searchIcon="@drawable/search_icon" />
 
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/anim"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="20dp"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="loading_4.json"
+        app:lottie_loop="true" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/top2"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_cat_home_layout"
-        />
+        tools:listitem="@layout/item_cat_home_layout" />
+
     <com.simform.refresh.SSPullToRefreshLayout
         android:id="@+id/ssPullRefresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/rv_category"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_courses"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/home_item_layout"
-        />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_courses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/home_item_layout" />
     </com.simform.refresh.SSPullToRefreshLayout>
-</LinearLayout>
+</RelativeLayout>

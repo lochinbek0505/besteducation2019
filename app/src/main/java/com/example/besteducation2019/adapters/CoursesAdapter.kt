@@ -35,7 +35,7 @@ class CoursesAdapter(
                 this.tvPr.text = "${data.percentage!!.toInt().toString()} %"
                 this.sekk.progress = data.percentage!!.toInt()
                 this.tvAuthor.text = "${data.author!!.firstName} ${data.author!!.lastName}"
-                Glide.with(context).load(data.author!!.image).into(this.tvImage)
+                Glide.with(context).load("https://bestedu.uz${ data.author!!.image }").into(this.tvImage)
                 this.tvName.text = data.name
 
             }

@@ -1,6 +1,6 @@
 package com.example.besteducation2019.model
 
-data class order_response (
+data class order_response(
     val data: Data10,
     val errors: Any,
     val status: String

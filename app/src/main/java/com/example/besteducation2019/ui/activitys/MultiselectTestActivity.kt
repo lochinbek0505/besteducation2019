@@ -4,9 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +14,9 @@ import com.example.besteducation2019.model.Answer
 import com.example.besteducation2019.model.Question
 import com.example.besteducation2019.model.Quiz
 import com.example.besteducation2019.model.lesson_id_model
+import com.example.besteducation2019.model.rate_request
 import com.example.besteducation2019.model.request_end
+import com.example.besteducation2019.model.test_result
 import com.example.besteducation2019.model.test_transfer_model
 import com.example.besteducation2019.network.ApiService
 import com.example.besteducation2019.network.RetrofitBuilder
@@ -88,6 +87,7 @@ class MultiselectTestActivity : AppCompatActivity() {
                         }
 
                     }
+                    Log.e("ORIGIN_TEST_TEST", "c2 - $count2 c1- $count")
 ////                    res_list.add(response)
                     if (count == count2) {
                         ball++
@@ -104,7 +104,7 @@ class MultiselectTestActivity : AppCompatActivity() {
                         }
 
 
-                        "multi_select" -> {
+                        "many_select" -> {
 
                             val model = test_transfer_model(model, ball, foiz, index)
                             val intent = Intent(this, MultiselectTestActivity::class.java)
@@ -129,7 +129,7 @@ class MultiselectTestActivity : AppCompatActivity() {
 
                         }
 
-                        "writeable" -> {
+                        "writable" -> {
                             val model = test_transfer_model(model, ball, foiz, index)
                             val intent = Intent(this, WriteableTestActivity::class.java)
                             intent.putExtra("transfer_test", model)
@@ -156,6 +156,8 @@ class MultiselectTestActivity : AppCompatActivity() {
                         }
 
                     }
+                    Log.e("ORIGIN_TEST_TEST", "c2 - $count2 c1- $count")
+
 ////                    res_list.add(response)
                     if (count == count2) {
                         ball++
@@ -272,33 +274,42 @@ class MultiselectTestActivity : AppCompatActivity() {
 //            }
 //            index++
 //        }
+        end(data2, response, title)
+        endQuiz(data2)
+    }
+    fun endQuiz(data: lesson_id_model) {
 
 
-        val builder = AlertDialog.Builder(this)
-        val inflater = LayoutInflater.from(this)
-        val dialogView = inflater.inflate(R.layout.custom_dialog_layout, null)
+        apiService =
+            RetrofitBuilder.create(readFromSharedPreferences(this, "TOKEN", ""))
 
-        builder.setView(dialogView)
-        dialog = builder.create()
-        dialog.setCancelable(false)
-        dialog.show()
+        lifecycleScope.launch {
 
-        var buttonClose = dialog.findViewById<Button>(R.id.buttonClose)
-        dialog.findViewById<TextView>(R.id.textView2)?.text = "To'g'ri javoblar : $ball"
-        dialog.findViewById<TextView>(R.id.textView3)?.text =
-            "Noto'g'ri javoblar : ${response.questions.size - ball}"
-        dialog.findViewById<TextView>(R.id.textView1)?.text = title
+            try {
 
-        buttonClose!!.setOnClickListener {
-            end(data2)
-            dialog.dismiss()
-            finish()
+
+                val request = apiService.saveRating(rate_request(data.id1,data.id3,data.id2,foiz,ball))
+
+                println(request.body())
+                Log.e("ANLZYE455", request.body().toString())
+
+                if (request.isSuccessful) {
+
+//                    val intent = Intent(this@TestActivity, TestResultActivity::class.java)
+//                    intent.putExtra("TRA", test_result(title, ball, response.questions.size))
+//                    startActivity(intent)
+//                    finish()
+                }
+
+            } catch (e: Exception) {
+                Log.e("ANLZYE4", e.message.toString())
+
+                Toast.makeText(this@MultiselectTestActivity, e.message, Toast.LENGTH_SHORT).show()
+            }
         }
-
-
     }
 
-    fun end(data: lesson_id_model) {
+    fun end(data: lesson_id_model, response: Quiz, title: String) {
 
 
         apiService =
@@ -314,6 +325,10 @@ class MultiselectTestActivity : AppCompatActivity() {
                 Log.e("ANLZYE4", request.toString())
 
                 if (request.isSuccessful) {
+                    val intent =
+                        Intent(this@MultiselectTestActivity, TestResultActivity::class.java)
+                    intent.putExtra("TRA", test_result(title, ball, response.questions.size))
+                    startActivity(intent)
                     finish()
                 }
 
@@ -324,6 +339,7 @@ class MultiselectTestActivity : AppCompatActivity() {
             }
         }
     }
+
 
     fun giveQuestion(list: List<Question>, intex: Int) {
 

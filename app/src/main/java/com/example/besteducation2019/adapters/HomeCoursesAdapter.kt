@@ -57,6 +57,11 @@ class HomeCoursesAdapter(
 
     }
 
+    fun updateList(newList: List<Course>) {
+        items = newList.toMutableList()
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
 
         val binding =

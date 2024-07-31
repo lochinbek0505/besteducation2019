@@ -138,12 +138,12 @@
                 android:textSize="20sp" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_buy2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:paddingStart="30dp"
                 android:paddingTop="10dp"
-                android:id="@+id/btn_buy2"
                 android:paddingEnd="30dp"
                 android:paddingBottom="10dp"
                 android:text="Kursni  olish"

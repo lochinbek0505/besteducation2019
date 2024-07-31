@@ -29,6 +29,15 @@
 
         </RelativeLayout>
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/anim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="loading.json"
+            app:lottie_loop="true" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -62,8 +71,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
-                        android:maxLines="1"
                         android:maxLength="14"
+                        android:maxLines="1"
                         android:text="+998" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -88,6 +97,7 @@
 
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -95,7 +105,6 @@
                     android:layout_marginEnd="20dp"
                     android:backgroundTint="@color/colorPrimary"
                     android:padding="10dp"
-                    android:id="@+id/btn_login"
                     android:text="Hisobga kirish"
                     android:textSize="18sp" />
 
@@ -103,12 +112,12 @@
                     android:id="@+id/tv_ro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ro'yxatdan o'tish"
-                    android:layout_marginBottom="40dp"
                     android:layout_marginTop="20dp"
-                    android:textSize="17sp"
+                    android:layout_marginBottom="40dp"
                     android:fontFamily="sans-serif-medium"
-                    android:textColor="@color/colorPrimary"/>
+                    android:text="Ro'yxatdan o'tish"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="17sp" />
 
             </LinearLayout>
 

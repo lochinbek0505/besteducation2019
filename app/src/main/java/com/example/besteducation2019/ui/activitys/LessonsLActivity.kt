@@ -4,8 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.besteducation2019.R
 import com.example.besteducation2019.adapters.LessonsAdapter
 import com.example.besteducation2019.databinding.ActivityLessonsLactivityBinding
 import com.example.besteducation2019.model.Course2
@@ -76,6 +79,8 @@ class LessonsLActivity : AppCompatActivity() {
 
     fun setDisplay(model: Course2, id: String) {
 //
+        binding.anim.visibility = View.GONE
+
         Log.e("ANLYZE", model.toString())
         var list = arrayListOf<transfer_model>()
         binding.tvName.text = model.name
@@ -83,11 +88,22 @@ class LessonsLActivity : AppCompatActivity() {
 
 
             it.lessons.forEach { it2 ->
+                if (it.isOpen) {
+                    list.add(transfer_model(it2, it.id))
+                } else {
 
-                list.add(transfer_model(it2, it.id))
+                    it2.isOpen = it.isOpen
+                    list.add(transfer_model(it2, it.id))
+
+
+                }
+
             }
         }
 //
+        val controller = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_right_to_left)
+        binding.rvAll.layoutAnimation = controller
+
         binding.rvAll.adapter =
             LessonsAdapter(list, object : LessonsAdapter.ItemSetOnClickListener {
                 override fun onClick(lessonXX: transfer_model) {
@@ -141,7 +157,7 @@ class LessonsLActivity : AppCompatActivity() {
             }
 
 
-            "multi_select" -> {
+            "many_select" -> {
 
                 val model = test_transfer_model(model, 0, 0, 0)
                 val intent = Intent(this, MultiselectTestActivity::class.java)
@@ -164,7 +180,7 @@ class LessonsLActivity : AppCompatActivity() {
 
             }
 
-            "writeable" -> {
+            "writable" -> {
                 val model = test_transfer_model(model, 0, 0, 0)
                 val intent = Intent(this, WriteableTestActivity::class.java)
                 intent.putExtra("transfer_test", model)

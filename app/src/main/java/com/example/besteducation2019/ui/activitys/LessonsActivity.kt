@@ -2,12 +2,12 @@ package com.example.besteducation2019.ui.activitys
 
 import android.app.DownloadManager
 import android.content.Context
-import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -120,6 +120,7 @@ class LessonsActivity : AppCompatActivity() {
                 Log.e("ANLZYE4", e.message.toString())
 
                 Toast.makeText(this@LessonsActivity, e.message, Toast.LENGTH_SHORT).show()
+
             }
         }
     }
@@ -130,6 +131,7 @@ class LessonsActivity : AppCompatActivity() {
     }
 
     fun display(model: Lesson2) {
+        binding.anim.visibility = View.GONE
 
         val url = model.video
         binding.tvName.text = model.name
@@ -155,6 +157,7 @@ class LessonsActivity : AppCompatActivity() {
             lifecycle.addObserver(youTubePlayerView)
 
             lifecycle.addObserver(youTubePlayerView)
+
             youTubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
 
@@ -164,7 +167,7 @@ class LessonsActivity : AppCompatActivity() {
 
                 }
             })
-
+//            youTubePlayerView.
             youTubePlayerView.enableAutomaticInitialization = false
             val listener: YouTubePlayerListener = object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
@@ -183,6 +186,7 @@ class LessonsActivity : AppCompatActivity() {
                 .controls(0)
                 .fullscreen(0)
                 .build()
+
             youTubePlayerView.initialize(listener, options)
 
 

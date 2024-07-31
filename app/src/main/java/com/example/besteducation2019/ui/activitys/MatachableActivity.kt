@@ -4,14 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.besteducation2019.R
 import com.example.besteducation2019.adapters.MatachableAdapter
 import com.example.besteducation2019.adapters.MatachableAdapter2
 import com.example.besteducation2019.databinding.ActivityMatachableBinding
@@ -19,7 +15,9 @@ import com.example.besteducation2019.model.Answer
 import com.example.besteducation2019.model.Question
 import com.example.besteducation2019.model.Quiz
 import com.example.besteducation2019.model.lesson_id_model
+import com.example.besteducation2019.model.rate_request
 import com.example.besteducation2019.model.request_end
+import com.example.besteducation2019.model.test_result
 import com.example.besteducation2019.model.test_transfer_model
 import com.example.besteducation2019.network.ApiService
 import com.example.besteducation2019.network.RetrofitBuilder
@@ -44,7 +42,7 @@ class MatachableActivity : AppCompatActivity() {
     var size = 0
     var list1 = arrayListOf<String>()
     var list2 = arrayListOf<String>()
-    lateinit var data2:lesson_id_model
+    lateinit var data2: lesson_id_model
     var list11 = arrayListOf<String>()
     var list22 = arrayListOf<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +72,8 @@ class MatachableActivity : AppCompatActivity() {
 
     fun giveQuestion(tests: List<Question>, index: Int) {
 
-        binding.rvMat2.isEnabled = true
+        var rv_bool_1 = false
+        var rv_bool_2 = false
         binding.tvQuestion.text = tests.get(index).json.question
         size = tests.get(index).json.answers.size
         tests.get(index).json.answers.forEach {
@@ -93,14 +92,19 @@ class MatachableActivity : AppCompatActivity() {
             override fun onClick(data: String, previousSelectedPosition: Int) {
                 count++
                 list[0] = data
+                Log.e("MATCH_TEST", "ADAPTER2- ${rv_bool_2}")
+                Log.e("MATCH_TEST", "ADAPTER1- ${rv_bool_1}")
+                rv_bool_1 = true
+//                if (binding.rvMat2.isEnabled) {
 
-                binding.rvMat1.isEnabled = true
-                if (count == 2 && binding.rvMat2.isEnabled) {
+                if (rv_bool_2) {
+                    rv_bool_1 = false
+                    rv_bool_2 =
+                        false//                        Log.e("MATCH_TEST", "ADAPTER1- ${ binding.rvMat2.isEnabled }")
                     list1.remove(list.get(0))
                     list2.remove(list.get(1))
                     jav1.add(list.get(0))
                     jav2.add(list.get(1))
-
 
                     adapter.resetAllItemBackgrounds()
                     adapter.notifyDataSetChanged()
@@ -113,26 +117,30 @@ class MatachableActivity : AppCompatActivity() {
                     adapter2.resetAllItemBackgrounds()
                     count = 0
 //                    adapter.notifyItemChanged(previousSelectedPosition)
+//                    }
                 }
-                Toast.makeText(this@MatachableActivity, "Click", Toast.LENGTH_SHORT).show()
             }
 
         })
         adapter2 =
             MatachableAdapter2(this, list2, object : MatachableAdapter2.ItemSetOnClickListener {
                 override fun onClick(data: String, previousSelectedPosition: Int) {
-                    Toast.makeText(this@MatachableActivity, "Click", Toast.LENGTH_SHORT).show()
 
                     list[1] = data
                     count++
-                    binding.rvMat1.setOnTouchListener { _, _ ->
-                        false
-                    }
-                    binding.rvMat2.setOnTouchListener { _, _ ->
-                        true
-                    }
-                    binding.rvMat2.isEnabled = true
-                    if (count == 2 && binding.rvMat1.isEnabled) {
+//                    binding.rvMat1.setOnTouchListener { _, _ ->
+//                        false
+//                    }
+//                    binding.rvMat2.setOnTouchListener { _, _ ->
+//                        true
+//                    }
+                    Log.e("MATCH_TEST", "ADAPTER2- ${rv_bool_2}")
+                    Log.e("MATCH_TEST", "ADAPTER1- ${rv_bool_1}")
+
+                    rv_bool_2 = true
+                    if (rv_bool_1) {
+                        rv_bool_1 = false
+                        rv_bool_2 = false
                         list1.remove(list.get(0))
                         list2.remove(list.get(1))
                         jav1.add(list.get(0))
@@ -164,16 +172,16 @@ class MatachableActivity : AppCompatActivity() {
 
         val tittle = model.name
         val prs = 100 / model.questions.size
-        binding.tvIndicate.text="${index+1}/${model.questions.size}"
+        binding.tvIndicate.text = "${index + 1}/${model.questions.size}"
 
         val tests = model.questions
         Log.e("QUIZZ1", model.toString())
         binding.tvTittle.text = tittle
         giveQuestion(tests, index)
 
-        binding.rvMat2.setOnTouchListener { _, _ ->
-            true
-        }
+//        binding.rvMat2.setOnTouchListener { _, _ ->
+//            true
+//        }
 
         binding.btnSubmit.setOnClickListener {
             if (jav1.size == tests.get(index).json.answers.size && jav2.size == tests.get(index).json.answers.size) {
@@ -188,6 +196,8 @@ class MatachableActivity : AppCompatActivity() {
                         if (jav2.get(index) != list22.get(list11.indexOf(s))) {
 
                             chh = false
+                            Log.e("ORIGIN_TEST_TEST", jav2.get(index).toString())
+
                             Log.e("AANNMM", "$s ${jav2.get(index)}")
 
                         }
@@ -208,7 +218,7 @@ class MatachableActivity : AppCompatActivity() {
                             val model = test_transfer_model(model, ball, foiz, index)
                             val intent = Intent(this, TestActivity::class.java)
                             intent.putExtra("transfer_test", model)
-                            intent.putExtra("lesson_id",data2)
+                            intent.putExtra("lesson_id", data2)
 
                             startActivity(intent)
                             finish()
@@ -216,12 +226,12 @@ class MatachableActivity : AppCompatActivity() {
                         }
 
 
-                        "multi_select" -> {
+                        "many_select" -> {
 
                             val model = test_transfer_model(model, ball, foiz, index)
                             val intent = Intent(this, MultiselectTestActivity::class.java)
                             intent.putExtra("transfer_test", model)
-                            intent.putExtra("lesson_id",data2)
+                            intent.putExtra("lesson_id", data2)
 
                             startActivity(intent)
                             finish()
@@ -234,11 +244,11 @@ class MatachableActivity : AppCompatActivity() {
 
                         }
 
-                        "writeable" -> {
+                        "writable" -> {
                             val model = test_transfer_model(model, ball, foiz, index)
                             val intent = Intent(this, WriteableTestActivity::class.java)
                             intent.putExtra("transfer_test", model)
-                            intent.putExtra("lesson_id",data2)
+                            intent.putExtra("lesson_id", data2)
                             startActivity(intent)
                             finish()
 
@@ -253,7 +263,27 @@ class MatachableActivity : AppCompatActivity() {
                     binding.sekk.progress = foiz
 //            res_list.add(response)
 //            response = Answer("", "", false)
+                    var chh = true
+                    jav1.forEachIndexed { index, s ->
 
+                        if (jav2.get(index) != list22.get(list11.indexOf(s))) {
+
+                            chh = false
+                            Log.e("ORIGIN_TEST_TEST", jav2.get(index).toString())
+
+                            Log.e("AANNMM", "$s ${jav2.get(index)}")
+
+                        }
+
+
+                    }
+                    Log.e("ORIGIN_TEST_TEST", jav2.toString())
+
+                    Log.e("AANNMM", chh.toString())
+
+                    if (chh) {
+                        ball++
+                    }
                     check(model, tittle)
                     println("Finished")
 
@@ -280,34 +310,42 @@ class MatachableActivity : AppCompatActivity() {
 //            index++
 //        }
 
+        end(data2, response, title)
+        endQuiz(data2)
+    }
+    fun endQuiz(data: lesson_id_model) {
 
-        val builder = AlertDialog.Builder(this)
-        val inflater = LayoutInflater.from(this)
-        val dialogView = inflater.inflate(R.layout.custom_dialog_layout, null)
 
-        builder.setView(dialogView)
-        dialog = builder.create()
-        dialog.setCancelable(false)
-        dialog.show()
+        apiService =
+            RetrofitBuilder.create(readFromSharedPreferences(this, "TOKEN", ""))
 
-        var buttonClose = dialog.findViewById<Button>(R.id.buttonClose)
-        dialog.findViewById<TextView>(R.id.textView2)?.text = "To'g'ri javoblar : $ball"
-        dialog.findViewById<TextView>(R.id.textView3)?.text =
-            "Noto'g'ri javoblar : ${response.questions.size - ball}"
-        dialog.findViewById<TextView>(R.id.textView1)?.text = title
+        lifecycleScope.launch {
 
-        buttonClose!!.setOnClickListener {
+            try {
 
-            end(data2)
-            dialog.dismiss()
-            finish()
+
+                val request = apiService.saveRating(rate_request(data.id1,data.id3,data.id2,foiz,ball))
+
+                println(request.body())
+                Log.e("ANLZYE455", request.body().toString())
+
+                if (request.isSuccessful) {
+
+//                    val intent = Intent(this@TestActivity, TestResultActivity::class.java)
+//                    intent.putExtra("TRA", test_result(title, ball, response.questions.size))
+//                    startActivity(intent)
+//                    finish()
+                }
+
+            } catch (e: Exception) {
+                Log.e("ANLZYE4", e.message.toString())
+
+                Toast.makeText(this@MatachableActivity, e.message, Toast.LENGTH_SHORT).show()
+            }
         }
-
-
     }
 
-
-    fun end(data: lesson_id_model) {
+    fun end(data: lesson_id_model, response: Quiz, title: String) {
 
 
         apiService =
@@ -323,6 +361,9 @@ class MatachableActivity : AppCompatActivity() {
                 Log.e("ANLZYE4", request.toString())
 
                 if (request.isSuccessful) {
+                    val intent = Intent(this@MatachableActivity, TestResultActivity::class.java)
+                    intent.putExtra("TRA", test_result(title, ball, response.questions.size))
+                    startActivity(intent)
                     finish()
                 }
 

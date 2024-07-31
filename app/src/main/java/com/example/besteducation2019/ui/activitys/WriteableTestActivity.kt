@@ -4,19 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.besteducation2019.R
 import com.example.besteducation2019.databinding.ActivityWriteableTestBinding
 import com.example.besteducation2019.model.Answer
 import com.example.besteducation2019.model.Quiz
 import com.example.besteducation2019.model.lesson_id_model
+import com.example.besteducation2019.model.rate_request
 import com.example.besteducation2019.model.request_end
+import com.example.besteducation2019.model.test_result
 import com.example.besteducation2019.model.test_transfer_model
 import com.example.besteducation2019.network.ApiService
 import com.example.besteducation2019.network.RetrofitBuilder
@@ -64,7 +62,7 @@ class WriteableTestActivity : AppCompatActivity() {
 
         val tittle = model.name
         val prs = 100 / model.questions.size
-        binding.tvIndicate.text="${index+1}/${model.questions.size}"
+        binding.tvIndicate.text = "${index + 1}/${model.questions.size}"
 
         val tests = model.questions
         Log.e("QUIZZ1", model.toString())
@@ -77,15 +75,31 @@ class WriteableTestActivity : AppCompatActivity() {
                 if (tests.size - 1 > index) {
                     index++
 ////                    res_list.add(response)
-                    if (binding.textInputEditText.text.toString() == tests.get(index).json.answers.get(
+                    if (binding.textInputEditText.text.toString()
+                            .toLowerCase() == tests.get(index).json.answers.get(
                             0
-                        ).value1
+                        ).value1.toString().toLowerCase()
                     ) {
                         ball++
                         Log.e("AANNMM", ball.toString())
+                        Log.e(
+                            "ORIGIN_TEST_TEST",
+                            "w1 - ${binding.textInputEditText.text.toString().toLowerCase()} w2 - ${
+                                tests.get(index).json.answers.get(
+                                    0
+                                ).value1.toString().toLowerCase()
+                            }"
+                        )
 
                     }
-
+                    Log.e(
+                        "ORIGIN_TEST_TEST",
+                        "w1 - ${binding.textInputEditText.text.toString().toLowerCase()} w2 - ${
+                            tests.get(index).json.answers.get(
+                                0
+                            ).value1.toString().toLowerCase()
+                        }"
+                    )
 //                    response = Answer("", "", false)
                     foiz += prs * 1
                     binding.sekk.progress = foiz
@@ -103,7 +117,7 @@ class WriteableTestActivity : AppCompatActivity() {
                         }
 
 
-                        "multi_select" -> {
+                        "many_select" -> {
 
                             val model = test_transfer_model(model, ball, foiz, index)
                             val intent = Intent(this, MultiselectTestActivity::class.java)
@@ -128,7 +142,7 @@ class WriteableTestActivity : AppCompatActivity() {
 
                         }
 
-                        "writeable" -> {
+                        "writable" -> {
 
                             givequection(data.quiz.questions.get(index).json.question)
 
@@ -149,6 +163,14 @@ class WriteableTestActivity : AppCompatActivity() {
                         Log.e("AANNMM", ball.toString())
 
                     }
+                    Log.e(
+                        "ORIGIN_TEST_TEST",
+                        "w1 - ${binding.textInputEditText.text.toString().toLowerCase()} w2 - ${
+                            tests.get(index).json.answers.get(
+                                0
+                            ).value1.toString().toLowerCase()
+                        }"
+                    )
 //            res_list.add(response)
 //            response = Answer("", "", false)
 
@@ -179,38 +201,51 @@ class WriteableTestActivity : AppCompatActivity() {
 //            index++
 //        }
 
+        end(data2, response, title)
 
-        val builder = AlertDialog.Builder(this)
-        val inflater = LayoutInflater.from(this)
-        val dialogView = inflater.inflate(R.layout.custom_dialog_layout, null)
-
-        builder.setView(dialogView)
-        dialog = builder.create()
-        dialog.setCancelable(false)
-        dialog.show()
-
-        var buttonClose = dialog.findViewById<Button>(R.id.buttonClose)
-        dialog.findViewById<TextView>(R.id.textView2)?.text = "To'g'ri javoblar : $ball"
-        dialog.findViewById<TextView>(R.id.textView3)?.text =
-            "Noto'g'ri javoblar : ${response.questions.size - ball}"
-        dialog.findViewById<TextView>(R.id.textView1)?.text = title
-
-        buttonClose!!.setOnClickListener {
-
-            end(data2)
-            dialog.dismiss()
-            finish()
-        }
-
-
+        endQuiz(data2)
     }
+
+    fun endQuiz(data: lesson_id_model) {
+
+
+        apiService =
+            RetrofitBuilder.create(readFromSharedPreferences(this, "TOKEN", ""))
+
+        lifecycleScope.launch {
+
+            try {
+
+
+                val request = apiService.saveRating(rate_request(data.id1,data.id3,data.id2,foiz,ball))
+
+                println(request.body())
+                Log.e("ANLZYE455", request.body().toString())
+
+                if (request.isSuccessful) {
+
+//                    val intent = Intent(this@TestActivity, TestResultActivity::class.java)
+//                    intent.putExtra("TRA", test_result(title, ball, response.questions.size))
+//                    startActivity(intent)
+//                    finish()
+                }
+
+            } catch (e: Exception) {
+                Log.e("ANLZYE4", e.message.toString())
+
+                Toast.makeText(this@WriteableTestActivity, e.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 
     fun readFromSharedPreferences(context: Context, key: String, defaultValue: String): String {
         val sharedPref = context.getSharedPreferences("token", Context.MODE_PRIVATE)
         return sharedPref.getString(key, defaultValue) ?: defaultValue
     }
 
-    fun end(data: lesson_id_model) {
+
+    fun end(data: lesson_id_model, response: Quiz, title: String) {
 
 
         apiService =
@@ -226,6 +261,9 @@ class WriteableTestActivity : AppCompatActivity() {
                 Log.e("ANLZYE4", request.toString())
 
                 if (request.isSuccessful) {
+                    val intent = Intent(this@WriteableTestActivity, TestResultActivity::class.java)
+                    intent.putExtra("TRA", test_result(title, ball, response.questions.size))
+                    startActivity(intent)
                     finish()
                 }
 
