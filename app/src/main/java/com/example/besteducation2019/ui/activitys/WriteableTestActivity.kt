@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.example.besteducation2019.databinding.ActivityWriteableTestBinding
 import com.example.besteducation2019.model.Answer
@@ -35,6 +36,7 @@ class WriteableTestActivity : AppCompatActivity() {
         binding = ActivityWriteableTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.sekk.max = 100
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // Disable dark mode
 
         val data = intent.getSerializableExtra("transfer_test") as test_transfer_model
         data2 = intent.getSerializableExtra("lesson_id") as lesson_id_model
@@ -65,7 +67,7 @@ class WriteableTestActivity : AppCompatActivity() {
         binding.tvIndicate.text = "${index + 1}/${model.questions.size}"
 
         val tests = model.questions
-        Log.e("QUIZZ1", model.toString())
+        Log.e("QUIZZ12", tests.get(index).json.answers.get(0).value1.toLowerCase().toString())
         binding.tvTittle.text = tittle
         givequection(data.quiz.questions.get(index).json.question)
         binding.btnSubmit.setOnClickListener {
@@ -75,11 +77,16 @@ class WriteableTestActivity : AppCompatActivity() {
                 if (tests.size - 1 > index) {
                     index++
 ////                    res_list.add(response)
+
+                    Log.e(
+                        "ASDFG", "${
+                            binding.textInputEditText.text.toString()
+                                .toLowerCase().equals(tests.get(index).json.answers.get(0).value1.toLowerCase().toString()
+                                    ,false)}")
+
                     if (binding.textInputEditText.text.toString()
-                            .toLowerCase() == tests.get(index).json.answers.get(
-                            0
-                        ).value1.toString().toLowerCase()
-                    ) {
+                            .toLowerCase().trim().equals(tests.get(index).json.answers.get(0).value1.toLowerCase().toString().trim()
+                                ,false)                    ) {
                         ball++
                         Log.e("AANNMM", ball.toString())
                         Log.e(
@@ -155,10 +162,18 @@ class WriteableTestActivity : AppCompatActivity() {
                 } else {
                     foiz += prs * 1
                     binding.sekk.progress = foiz
-                    if (binding.textInputEditText.text.toString() == tests.get(index).json.answers.get(
-                            0
-                        ).value1
-                    ) {
+
+                    Log.e(
+                        "ASDFG", "${
+                            binding.textInputEditText.text.toString()
+                                .toLowerCase().equals(tests.get(index).json.answers.get(0).value1.toLowerCase().toString()
+                                    ,false)
+                        }"
+                    )
+
+
+                    if (binding.textInputEditText.text.toString().trim().equals(tests.get(index).json.answers.get(0).value1.toLowerCase().toString().trim()
+                        ,false) ) {
                         ball++
                         Log.e("AANNMM", ball.toString())
 
@@ -217,7 +232,8 @@ class WriteableTestActivity : AppCompatActivity() {
             try {
 
 
-                val request = apiService.saveRating(rate_request(data.id1,data.id3,data.id2,foiz,ball))
+                val request =
+                    apiService.saveRating(rate_request(data.id1, data.id3, data.id2, foiz, ball))
 
                 println(request.body())
                 Log.e("ANLZYE455", request.body().toString())

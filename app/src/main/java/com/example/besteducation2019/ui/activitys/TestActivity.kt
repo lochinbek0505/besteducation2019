@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.example.besteducation2019.R
 import com.example.besteducation2019.databinding.ActivityTestBinding
@@ -41,6 +42,7 @@ class TestActivity : AppCompatActivity() {
 
         setContentView(binding.root)
         binding.sekk.max = 100
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // Disable dark mode
 
         val data = intent.getSerializableExtra("transfer_test") as test_transfer_model
 

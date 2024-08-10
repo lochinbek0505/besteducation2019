@@ -2,6 +2,7 @@ package com.example.besteducation2019.ui.activitys
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.besteducation2019.databinding.ActivityTestResultBinding
 import com.example.besteducation2019.model.test_result
 
@@ -13,6 +14,7 @@ class TestResultActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val data = intent.getSerializableExtra("TRA") as test_result
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // Disable dark mode
 
         binding.tvTestName.text = data.title
         binding.tvCorrect.text = "${data.correct} ta"

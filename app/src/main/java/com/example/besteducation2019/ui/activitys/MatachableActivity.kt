@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.example.besteducation2019.adapters.MatachableAdapter
 import com.example.besteducation2019.adapters.MatachableAdapter2
@@ -58,6 +59,7 @@ class MatachableActivity : AppCompatActivity() {
         Log.e("QUIZZ1", data.toString())
         binding.sekk.progress = foiz
         data2 = intent.getSerializableExtra("lesson_id") as lesson_id_model
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // Disable dark mode
 
         display(data)
 
@@ -92,8 +94,8 @@ class MatachableActivity : AppCompatActivity() {
             override fun onClick(data: String, previousSelectedPosition: Int) {
                 count++
                 list[0] = data
-                Log.e("MATCH_TEST", "ADAPTER2- ${rv_bool_2}")
-                Log.e("MATCH_TEST", "ADAPTER1- ${rv_bool_1}")
+                Log.e("MATCH_TEST", "ADAPTER2- ${list[1]}")
+                Log.e("MATCH_TEST", "ADAPTER1- ${list[0]}")
                 rv_bool_1 = true
 //                if (binding.rvMat2.isEnabled) {
 
@@ -134,8 +136,8 @@ class MatachableActivity : AppCompatActivity() {
 //                    binding.rvMat2.setOnTouchListener { _, _ ->
 //                        true
 //                    }
-                    Log.e("MATCH_TEST", "ADAPTER2- ${rv_bool_2}")
-                    Log.e("MATCH_TEST", "ADAPTER1- ${rv_bool_1}")
+                    Log.e("MATCH_TEST", "ADAPTER2- ${list[1]}")
+                    Log.e("MATCH_TEST", "ADAPTER1- ${list[0]}")
 
                     rv_bool_2 = true
                     if (rv_bool_1) {
@@ -190,13 +192,23 @@ class MatachableActivity : AppCompatActivity() {
                 if (tests.size - 1 > index) {
                     index++
 ////                    res_list.add(response)
+
+                    Log.e("ORIGIN_TEST_TEST", "${jav1} \n ${jav2} ")
+                    Log.e("ORIGIN_TEST_TEST", "\n\n${list11} \n ${list22} ")
+
+
                     var chh = true
                     jav1.forEachIndexed { index, s ->
+
+                        Log.e(
+                            "ORIGIN_TEST_TEST",
+                            "${jav2.get(index)} ${list22.get(list11.indexOf(s))}"
+                        )
 
                         if (jav2.get(index) != list22.get(list11.indexOf(s))) {
 
                             chh = false
-                            Log.e("ORIGIN_TEST_TEST", jav2.get(index).toString())
+//                            Log.e("ORIGIN_TEST_TEST", jav2.get(index).toString())
 
                             Log.e("AANNMM", "$s ${jav2.get(index)}")
 
@@ -313,6 +325,7 @@ class MatachableActivity : AppCompatActivity() {
         end(data2, response, title)
         endQuiz(data2)
     }
+
     fun endQuiz(data: lesson_id_model) {
 
 
@@ -324,7 +337,8 @@ class MatachableActivity : AppCompatActivity() {
             try {
 
 
-                val request = apiService.saveRating(rate_request(data.id1,data.id3,data.id2,foiz,ball))
+                val request =
+                    apiService.saveRating(rate_request(data.id1, data.id3, data.id2, foiz, ball))
 
                 println(request.body())
                 Log.e("ANLZYE455", request.body().toString())

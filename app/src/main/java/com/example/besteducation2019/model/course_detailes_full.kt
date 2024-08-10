@@ -28,7 +28,7 @@ data class Course2(
     @SerializedName("feedbackers") var feedbackers: Any,
     @SerializedName("modules") var modules: List<Module>,
     @SerializedName("is_open") var isOpen: Boolean,
-    @SerializedName("quizzes_count") var quizzes_count: Int,
+    @SerializedName("count_quizzes") var quizzes_count: Int,
 )
 
 

@@ -13,6 +13,7 @@ import com.example.besteducation2019.databinding.FragmentRegisterBinding
 import com.example.besteducation2019.model.register_model
 import com.example.besteducation2019.model.register_respons
 import com.example.besteducation2019.network.ApiClient
+import com.example.besteducation2019.utilits.CustomLottieDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,6 +22,8 @@ class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var request: ApiClient
+    private lateinit var dialog: CustomLottieDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,6 +35,7 @@ class RegisterFragment : Fragment() {
     ): View? {
 
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        dialog = CustomLottieDialog(requireActivity())
 
         binding.tvRo.setOnClickListener {
 
@@ -100,7 +104,7 @@ class RegisterFragment : Fragment() {
 
     fun getRegister(model: register_model) {
         binding.anim.visibility = View.VISIBLE
-
+        dialog.show()
         request.apiService.register(model).enqueue(object : Callback<register_respons> {
             override fun onResponse(
                 p0: Call<register_respons>,
@@ -108,19 +112,20 @@ class RegisterFragment : Fragment() {
             ) {
                 val respons_model = respons.body() as register_respons
                 if (respons_model.status == "success") {
-
+                    dialog.dismiss()
                     findNavController().navigate(R.id.action_registerFragment_to_loginFragment2)
                     Toast.makeText(
                         requireActivity(),
                         respons_model.errors.toString(),
                         Toast.LENGTH_LONG
                     ).show()
+
                     Log.e("RESPONSSSSS", "  ${respons_model.errors} $p0")
 
 
                 } else {
 
-
+                    dialog.dismiss()
                     Toast.makeText(
                         requireActivity(),
                         respons_model.errors.toString(),
@@ -134,7 +139,9 @@ class RegisterFragment : Fragment() {
 
             override fun onFailure(p0: Call<register_respons>, respons: Throwable) {
                 println("RESPONSSSSS  ${respons.message} $p0")
+                dialog.dismiss()
             }
+
         })
 
 

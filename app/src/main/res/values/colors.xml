@@ -13,4 +13,11 @@
     <color name="unselected_text_color">#000000</color> <!-- Example color -->
 
 
+    <color name="colorUnchecked">#FFFFFF</color>
+    <color name="colorUncheckedStroke">#FF6200EE</color>
+    <color name="colorUncheckedText">#FF6200EE</color>
+
+    <color name="colorChecked">#FF6200EE</color>
+    <color name="colorCheckedStroke">#FF6200EE</color>
+    <color name="colorCheckedText">#FFFFFF</color>
 </resources>

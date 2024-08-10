@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.besteducation2019.R
 
 class PayPageActivity : AppCompatActivity() {
@@ -13,6 +14,7 @@ class PayPageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_pay_page)
 
         val webView = findViewById<WebView>(R.id.webView)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // Disable dark mode
 
         val url = intent.getStringExtra("URL")
 

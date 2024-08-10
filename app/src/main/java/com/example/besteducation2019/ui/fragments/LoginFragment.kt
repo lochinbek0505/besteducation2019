@@ -111,11 +111,11 @@ class LoginFragment : Fragment() {
                 respons: Response<login_response>
             ) {
                 val respons_model = respons.body() as login_response
-                Toast.makeText(
-                    requireActivity(),
-                    "$respons_model",
-                    Toast.LENGTH_LONG
-                ).show()
+//                Toast.makeText(
+//                    requireActivity(),
+//                    "$respons_model",
+//                    Toast.LENGTH_LONG
+//                ).show()
 
                 if (respons_model.status == "success") {
 
@@ -146,12 +146,12 @@ class LoginFragment : Fragment() {
 //
 //                    }
 //                    dialog.dismiss()
-
-                    Toast.makeText(
-                        requireActivity(),
-                        respons_model.data.token,
-                        Toast.LENGTH_LONG
-                    ).show()
+//
+//                    Toast.makeText(
+//                        requireActivity(),
+//                        respons_model.data.token,
+//                        Toast.LENGTH_LONG
+//                    ).show()
                     Log.e("show_data", "  ${respons_model} $p0")
 
                 } else {

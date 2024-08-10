@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.example.besteducation2019.R
 import com.example.besteducation2019.databinding.ActivityMultiselectTestBinding
@@ -46,6 +47,7 @@ class MultiselectTestActivity : AppCompatActivity() {
         display(data)
         binding.sekk.progress = foiz
         data2 = intent.getSerializableExtra("lesson_id") as lesson_id_model
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // Disable dark mode
 
         Log.e("QUIZZ1", data.toString())
 

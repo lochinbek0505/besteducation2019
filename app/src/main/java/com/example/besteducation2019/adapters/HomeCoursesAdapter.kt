@@ -44,7 +44,6 @@ class HomeCoursesAdapter(
                 this.tvCoursesName.text = data.name
                 this.tvDescription.text = data.description
                 this.tvTeacher.text = "${data.author_.firstName} ${data.author_.lastName}"
-                this.tvFeedback.text = data.feedback.toDouble().toString()
                 this.tvPrice.text = "${data.price} so'm"
                 this.tvParticantCount.text = "${data.count_students.toString()} ta o'quvchi"
                 Glide.with(context).load(data.image).into(this.ivImage)

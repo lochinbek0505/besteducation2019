@@ -1,10 +1,14 @@
 package com.example.besteducation2019.network
 
 import com.example.besteducation2019.model.Mycourse
+import com.example.besteducation2019.model.billing_model
 import com.example.besteducation2019.model.buy_model
 import com.example.besteducation2019.model.buy_response_model
+import com.example.besteducation2019.model.change_password_model
+import com.example.besteducation2019.model.change_password_response
 import com.example.besteducation2019.model.course_detailes_full
 import com.example.besteducation2019.model.course_model
+import com.example.besteducation2019.model.courses_rating_model
 import com.example.besteducation2019.model.end_model
 import com.example.besteducation2019.model.get_rating_model
 import com.example.besteducation2019.model.get_rating_request
@@ -41,6 +45,8 @@ interface ApiService {
     @POST("users/login/")
     fun login(@Body dataModel: login_model?): Call<login_response>
 
+    @GET("courses/billing_reports/")
+    suspend fun getBillingReport(): Response<billing_model>
 
     @POST("courses/order/")
     suspend fun order(@Body course: order_model): Response<order_response>
@@ -48,14 +54,17 @@ interface ApiService {
     @POST("courses/buy/")
     suspend fun buy(@Body model: buy_model): Response<buy_response_model>
 
+    @POST("users/change_password/")
+    suspend fun change_password(@Body model: change_password_model): Response<change_password_response>
+
     @GET("courses/")
     suspend fun courses(): Response<course_model>
 
     @POST("courses/rate/")
-    suspend fun saveRating(@Body model:rate_request):Response<rate_response>
+    suspend fun saveRating(@Body model: rate_request): Response<rate_response>
 
     @POST("courses/ratings/")
-    suspend fun getRating(@Body model:get_rating_request):Response<get_rating_model>
+    suspend fun getRating(@Body model: get_rating_request): Response<get_rating_model>
 
     @GET("courses/my/")
     suspend fun myCourses(): Response<Mycourse>
@@ -107,6 +116,8 @@ interface ApiService {
         @Path("id3") id3: String
     ): Response<lesson_datailes>
 
+    @GET("courses/for_rating/")
+    suspend fun getCoursesRating(): Response<courses_rating_model>
 //    @GET("courses/course/{id}/lesson/{id2}/")
 //    fun lesson(@Path("id") id: String, @Path("id2") id2: String): Call<LessonX>
 

@@ -74,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Tovmurodov Lochin"
+                    android:text=" "
                     android:textColor="@color/black"
                     android:textSize="22sp" />
 
@@ -174,42 +174,42 @@
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="10dp"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="4dp">
+            <!--            <androidx.cardview.widget.CardView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="60dp"-->
+            <!--                android:layout_marginStart="20dp"-->
+            <!--                android:layout_marginTop="25dp"-->
+            <!--                android:layout_marginEnd="15dp"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                app:cardCornerRadius="15dp"-->
+            <!--                app:cardElevation="4dp">-->
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+            <!--                <RelativeLayout-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent">-->
 
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="20dp"
-                        android:src="@drawable/clock2" />
+            <!--                    <ImageView-->
+            <!--                        android:layout_width="35dp"-->
+            <!--                        android:layout_height="35dp"-->
+            <!--                        android:layout_alignParentStart="true"-->
+            <!--                        android:layout_centerVertical="true"-->
+            <!--                        android:layout_marginStart="20dp"-->
+            <!--                        android:src="@drawable/clock2" />-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="80dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="Faolligi : 15 soat 25 minut"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_centerVertical="true"-->
+            <!--                        android:layout_marginStart="80dp"-->
+            <!--                        android:fontFamily="sans-serif-medium"-->
+            <!--                        android:text="Faolligi : 15 soat 25 minut"-->
+            <!--                        android:textColor="@color/black"-->
+            <!--                        android:textSize="18sp" />-->
 
 
-                </RelativeLayout>
+            <!--                </RelativeLayout>-->
 
-            </androidx.cardview.widget.CardView>
+            <!--            </androidx.cardview.widget.CardView>-->
             <androidx.cardview.widget.CardView
                 android:id="@+id/btn_private"
                 android:layout_width="match_parent"
@@ -223,8 +223,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
+                    android:layout_height="match_parent">
 
                     <ImageView
                         android:layout_width="40dp"
@@ -246,9 +245,9 @@
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentEnd="true"
                         android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginEnd="10dp"
                         android:src="@drawable/next" />
 
@@ -256,49 +255,50 @@
 
             </androidx.cardview.widget.CardView>
 
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="60dp"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginTop="25dp"-->
+<!--                android:layout_marginEnd="15dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                app:cardCornerRadius="15dp"-->
+<!--                app:cardElevation="4dp">-->
+
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:gravity="center_vertical">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_alignParentStart="true"-->
+<!--                        android:layout_marginStart="20dp"-->
+<!--                        android:src="@drawable/day_mode" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_centerHorizontal="true"-->
+<!--                        android:fontFamily="sans-serif-medium"-->
+<!--                        android:text="Qorong'u rejim"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="20sp" />-->
+
+<!--                    <Switch-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_alignParentEnd="true"-->
+<!--                        android:layout_centerHorizontal="true"-->
+<!--                        android:layout_marginEnd="10dp" />-->
+
+<!--                </RelativeLayout>-->
+
+<!--            </androidx.cardview.widget.CardView>-->
+
             <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="10dp"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="4dp">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginStart="20dp"
-                        android:src="@drawable/day_mode" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="Qorong'u rejim"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                    <Switch
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginEnd="10dp" />
-
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
+                android:id="@+id/btn_admin"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginStart="20dp"

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.example.besteducation2019.R
 import com.example.besteducation2019.adapters.LessonsAdapter
@@ -32,6 +33,7 @@ class LessonsLActivity : AppCompatActivity() {
         binding = ActivityLessonsLactivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val id = intent.getStringExtra("id_course")
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // Disable dark mode
 
         getDataFromNetwork(id.toString())
 

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.besteducation2019.adapters.OuterAdapter
@@ -35,6 +36,7 @@ class ShowCourseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityShowCourseBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); // Disable dark mode
 
         val id = intent.getStringExtra("id_course")
 
@@ -133,13 +135,12 @@ class ShowCourseActivity : AppCompatActivity() {
 
         binding.tvCourseName.text = model.name
         binding.tvDescription.text = model.description
-        binding.tvFeedback.text = model.feedback.toString()
         binding.tvPrice.text = "${model.price} so'm"
         binding.tvParticantCount.text = "${model.countStudents} ta "
 //        binding.tvParticantCount.text=model.
 
         binding.tvTeacherName.text = "${model.author_.firstName} ${model.author_.lastName}"
-        binding.tvLessonsLen.text = "${model.countModules} ta videodars"
+        binding.tvLessonsLen.text = "${model.countLessons} ta videodars"
         binding.tvTestsLen.text = "${model.quizzes_count} ta sinov testi"
         val len = model.length
 

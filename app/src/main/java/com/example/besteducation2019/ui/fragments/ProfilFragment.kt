@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.ACTION_VIEW
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -19,12 +20,15 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.example.besteducation2019.databinding.ChangeDialogBinding
 import com.example.besteducation2019.databinding.EditDialogBinding
 import com.example.besteducation2019.databinding.FragmentProfilBinding
 import com.example.besteducation2019.model.User
+import com.example.besteducation2019.model.change_password_model
 import com.example.besteducation2019.model.upload_image_data
 import com.example.besteducation2019.network.ApiService
 import com.example.besteducation2019.network.RetrofitBuilder
+import com.example.besteducation2019.ui.activitys.BIllingActivity
 import com.example.besteducation2019.ui.activitys.SignActivity
 import com.example.besteducation2019.utilits.CustomLottieDialog
 import com.example.besteducation2019.utilits.DatabaseHelper
@@ -47,7 +51,7 @@ class ProfilFragment : Fragment() {
     private val IMAGE_PICK_CODE = 1000
     private var pickedImageUri: Uri? = null
     lateinit var data: User
-
+    private lateinit var alertDialog2: AlertDialog
     private val PICK_IMAGE_REQUEST = 1
     private val PERMISSION_REQUEST_CODE = 101
     lateinit var dialog: CustomLottieDialog
@@ -87,7 +91,27 @@ class ProfilFragment : Fragment() {
             }
 
         }
+
+        _binding!!.btnPrivate.setOnClickListener {
+
+            passwordDialog()
+
+        }
+
+        _binding!!.btnAdmin.setOnClickListener {
+
+            val group_telegram = Intent (ACTION_VIEW, Uri.parse("https://t.me/JamshidOtaqulov"))
+            startActivity(group_telegram)
+
+        }
+
         dialog = CustomLottieDialog(requireActivity())
+
+        _binding!!.btnFinancial.setOnClickListener {
+
+            startActivity(Intent(requireActivity(), BIllingActivity::class.java))
+
+        }
 
         data = dbHelper.readData().get(0)
         show(data)
@@ -210,6 +234,79 @@ class ProfilFragment : Fragment() {
                 // Handle error
             }
         })
+    }
+
+
+    fun passwordDialog() {
+
+        val dialogBinding = ChangeDialogBinding.inflate(layoutInflater)
+
+        alertDialog2 = AlertDialog.Builder(requireContext())
+            .setView(dialogBinding.root)
+            .create()
+        dialogBinding.btnCancel.setOnClickListener {
+
+            alertDialog2.dismiss()
+
+        }
+        dialogBinding.btnEdit.setOnClickListener {
+
+            Log.e("ANLZYE_TIP", "${dialogBinding.etNewPw}")
+
+
+            change_request(
+                change_password_model(
+                    dialogBinding.etOldPw.text.toString(),
+                    dialogBinding.etNewPw.text.toString()
+                )
+            )
+
+        }
+        alertDialog2.show()
+
+
+    }
+
+    fun change_request(data: change_password_model) {
+
+
+        apiService =
+            RetrofitBuilder.create(readFromSharedPreferences(requireActivity(), "TOKEN", ""))
+
+        lifecycleScope.launch {
+
+            try {
+
+                val request = apiService.change_password(data)
+                println(request.body())
+                Log.e("ANLZYE4", request.toString())
+
+                if (request.isSuccessful) {
+                    if (request.body()?.status == "success") {
+                        Toast.makeText(
+                            requireActivity(),
+                            "Parol muvaffaqiyatli o'zgartirildi",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        alertDialog2.dismiss()
+
+                    } else {
+                        Toast.makeText(
+                            requireActivity(),
+                            request.body()?.errors.toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+            } catch (e: Exception) {
+                Log.e("ANLZYE4", e.message.toString())
+
+                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
     fun showDialog(data: User) {
