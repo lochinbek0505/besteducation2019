@@ -96,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_question"
         android:layout_margin="13dp"
-        android:hint="Enter your name">
+        android:hint="Javoningizni kiriting">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditText"

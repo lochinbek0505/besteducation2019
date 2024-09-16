@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.activitys.MultiselectTestActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/rl_1"
@@ -38,12 +46,14 @@
     <!--        android:layout_height="match_parent"-->
     <!--        >-->
     <!--        -->
+
+
     <LinearLayout
         android:id="@+id/ll_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rl_1"
-        android:layout_marginTop="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="80dp"
         android:gravity="center"
         android:orientation="horizontal"
 
@@ -91,6 +101,7 @@
         android:textSize="20sp" />
 
     <LinearLayout
+        android:id="@+id/aaa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_question"
@@ -216,11 +227,14 @@
         android:fontFamily="sans-serif-medium"
         android:padding="15dp"
         android:text="Javobni tasdiqlash"
-
+android:layout_below="@id/aaa"
         android:textSize="18sp"
         app:cornerRadius="15dp" />
 
     <!--    </RelativeLayout>-->
     <!--</ScrollView>-->
+
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
 

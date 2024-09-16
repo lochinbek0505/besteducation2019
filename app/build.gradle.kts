@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.besteducation2019"
+    namespace = "uz.bestedu.besteducation2019"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.besteducation2019"
+        applicationId = "uz.bestedu.besteducation2019"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

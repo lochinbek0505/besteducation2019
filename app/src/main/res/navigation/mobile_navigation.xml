@@ -7,24 +7,24 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.besteducation2019.ui.fragments.HomeFragment"
+        android:name="uz.bestedu.besteducation2019.ui.fragments.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.besteducation2019.ui.fragments.CoursesFragment"
+        android:name="uz.bestedu.besteducation2019.ui.fragments.CoursesFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.besteducation2019.ui.fragments.ReytingFragment"
+        android:name="uz.bestedu.besteducation2019.ui.fragments.ReytingFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/profil_Fragment"
-        android:name="com.example.besteducation2019.ui.fragments.ProfilFragment"
+        android:name="uz.bestedu.besteducation2019.ui.fragments.ProfilFragment"
         android:label="fragment_profil"
         tools:layout="@layout/fragment_profil" />
 </navigation>

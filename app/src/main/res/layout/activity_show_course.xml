@@ -123,6 +123,7 @@
                         <ImageView
                             android:id="@+id/iv_teacher"
                             android:layout_width="match_parent"
+                            android:scaleType="centerCrop"
                             android:layout_height="match_parent" />
 
                     </androidx.cardview.widget.CardView>
@@ -189,15 +190,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:fontFamily="sans-serif-medium"
-                            android:textSize="17sp" />
+                            android:textSize="18sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
                             android:fontFamily="sans-serif-medium"
                             android:text=" o'quvchi"
-                            android:textSize="17sp" />
+                            android:textSize="18sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -221,7 +221,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:fontFamily="sans-serif-medium"
-                            android:text="200 000 so'm"
+                            android:text=" so'm"
                             android:textColor="@color/colorPrimary"
                             android:textSize="17sp" />
                     </LinearLayout>
